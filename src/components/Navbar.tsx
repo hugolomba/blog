@@ -3,15 +3,17 @@ import placeholder from "../assets/images/placeholder.webp"
 
 // import userAvatar from "../assets/avatar.png"
 import { useAuth } from "../contexts/authContext"
+import { useState } from "react";
 
 
 function Navbar() {
   const { user } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="navbar m-2 p-4 bg-white rounded-sm flex items-center font-poppins font-bold">
       <div className="flex-1">
-        <a href="#" className="text-2xl font-bold"><GiFeather className="inline-block mr-1" /><h1 className="inline-block">Blog</h1></a>
+        <a href="#" className="text-2xl font-bold"><h1 className="inline-block">Blog</h1> <GiFeather className="inline-block mr-1" /></a>
       </div>
      <div className="">
       <img className="w-12 h-12 object-cover rounded-full" src={user ? user.avatarImage : placeholder} alt="User avatar" />

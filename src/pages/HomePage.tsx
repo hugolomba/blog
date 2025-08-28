@@ -20,7 +20,7 @@ export default function HomePage() {
             }
         };
         fetchPublishedPosts();
-    }, []);
+    }, [publishedPosts]);
 
   return (
     <div>

@@ -31,3 +31,10 @@ export type Post = {
 export type RecentPostsProps = {
   publishedPosts: Post[];
 }
+
+export type AuthContextType = {
+  user: User | null;
+    register: (name: string, username: string, email: string, password: string, bio: string, avatarImage: File) => Promise<void>;
+  login: (username: string, password: string) => Promise<void>;
+  logout: () => void;
+}
