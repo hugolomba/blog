@@ -48,10 +48,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const data = response.data; // { name, token }
         console.log(data);
       setUser(data);
-      localStorage.setItem("token", data.data.token);
+      localStorage.setItem("token", data.token);
 
     } catch (err) {
       alert("Login failed");
+        console.error("Login error:", err);
     }
   };
 
