@@ -1,14 +1,20 @@
 import { GiFeather } from "react-icons/gi"
-import userAvatar from "../assets/avatar.png"
+import placeholder from "../assets/images/placeholder.webp"
+
+// import userAvatar from "../assets/avatar.png"
+import { useAuth } from "../contexts/authContext"
+
 
 function Navbar() {
+  const { user } = useAuth();
+
   return (
     <div className="navbar m-2 p-4 bg-white rounded-sm flex items-center font-poppins font-bold">
       <div className="flex-1">
-        <a href="#" className="text-2xl font-bold"><GiFeather className="inline-block mr-1" /> Hugo's Blog</a>
+        <a href="#" className="text-2xl font-bold"><GiFeather className="inline-block mr-1" /><h1 className="inline-block">Blog</h1></a>
       </div>
      <div className="">
-      <img className="w-12 rounded-full" src={userAvatar} alt="User avatar" />
+      <img className="w-12 h-12 object-cover rounded-full" src={user ? user.avatarImage : placeholder} alt="User avatar" />
      </div>
     </div>
 
