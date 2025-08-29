@@ -1,16 +1,17 @@
 import { useState } from "react";
-import { useAuth } from "../contexts/authContext"; // caminho pro seu AuthContext
+import { useAuth } from "../contexts/authContext"; 
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
-  const { login } = useAuth(); // pegamos só a função de login
+  const { login } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await login(username, password); // chama a função do contexto
-    // você pode redirecionar aqui, por exemplo para a home:
-    // navigate("/dashboard") se estiver usando react-router
+    await login(username, password);
+    navigate("/");
   };
 
   return (

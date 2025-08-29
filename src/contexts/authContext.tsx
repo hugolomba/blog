@@ -70,6 +70,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  // Logout
   const logout = () => {
     setUser(null);
     localStorage.removeItem("token");
