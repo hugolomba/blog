@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import Register from './components/Register'
 import Home from './pages/HomePage'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import PostDetail from './pages/PostDetail'
 
 
 export default function AppRouter() {
@@ -14,6 +15,7 @@ export default function AppRouter() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/post/:id" element={<PostDetail />} />
       </Routes>
     </BrowserRouter>
   );
