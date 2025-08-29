@@ -7,7 +7,7 @@ export default function Header() {
   const { user } = useAuth();
 
   return (
-    <section className="text-gray-800 p-4 rounded-xl">
+    <section className="text-gray-800 p-4 rounded-xl ">
 
       {user ? <LoggedGreetings user={user} /> : <NotLoggedGreeting />}
 
