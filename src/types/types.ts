@@ -13,6 +13,7 @@ export type User = {
     token: string;
 }
 
+
 export type Post = {
   id: number;
   author: User;
@@ -23,9 +24,9 @@ export type Post = {
   published: boolean;
   createdAt: string; 
   updatedAt: string; 
-  savedBy: User[];
-  likes: User[];
-  
+  savedBy: [commentId: number, createdAt: string, id: number, postId: number, userId: number][];
+  likes: [commentId: number, createdAt: string, id: number, postId: number, userId: number][];
+
 };
 
 export type RecentPostsProps = {

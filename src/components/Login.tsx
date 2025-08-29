@@ -10,8 +10,15 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await login(username, password);
-    navigate("/");
+    try {
+      await login(username, password);
+      if (localStorage.getItem("token")) {
+        navigate("/");
+      }
+      
+    } catch (error) {
+      console.error("Login error:", error);
+    }
   };
 
   return (

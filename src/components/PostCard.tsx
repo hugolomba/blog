@@ -2,11 +2,13 @@ import type { Post } from "../types/types";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useAuth } from "../contexts/authContext";
 import { useState } from "react";
+import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 
 
 export default function PostCard({ post }: { post: Post }) {
   const { user } = useAuth();
-  const [likes, setLikes] = useState(post.likes.map(like => like.id)); // Array of user IDs who liked the post
+  const [likes, setLikes] = useState(post.likes.map((like: any) => like.userId)); // Array of user IDs who liked the post
+  const [bookmarks, setBookmarks] = useState(post.savedBy.map((bookmark: any) => bookmark.userId)); // Array of user IDs who bookmarked the post
 
   const handleLike = async () => {
     console.log("Like button clicked", post.id);
@@ -29,19 +31,54 @@ export default function PostCard({ post }: { post: Post }) {
     }
   };
 
+  const handleBookmark = async () => {
+    if (!user) return;
+    console.log("Bookmark button clicked", post.id);
+
+    try {
+      await fetch(`${import.meta.env.VITE_API_URL_BASE}/posts/${post.id}/save`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+      });
+      if (user &&!bookmarks.includes(user.id)) {
+        setBookmarks([...bookmarks, user.id]);
+      } else {
+        setBookmarks(bookmarks.filter(id => id !== user.id));
+      }
+    } catch (error) {
+      console.error("Error bookmarking post:", error);
+    }
+  };
+
+
+
+  const handleBookmarkIcon = () => {
+    if (!user) return null;
+    if (bookmarks.includes(user.id)) {
+      return <FaBookmark className="text-blue-500" />
+    } else {
+      return <FaRegBookmark />
+    }
+  };
+
   const handleLikeIcon = () => {
-    if (!user) return
+    if (!user) return null;
     if (likes.includes(user.id)) {
       return <FaHeart className="text-red-500" />
     } else {
-      return <FaRegHeart />
-;
+      return <FaRegHeart />;
     }
   };
 
   return (
-    <li className="bg-white rounded-2xl shadow-md p-4 mb-6 hover:shadow-lg transition">
+    <li className="bg-white rounded-md shadow-md p-4 mb-6 hover:shadow-lg transition">
       <img src={post.coverImage} alt={post.title} className="w-full h-42 object-cover rounded-md" />
+      {user && <span onClick={handleBookmark} className="text-sm text-gray-500">{handleBookmarkIcon()}</span>}
+
+
 
       <div className="flex justify-between items-center mt-2 mb-1">
         <h3 className="text-lg font-semibold">{post.title}</h3>
