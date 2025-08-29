@@ -2,6 +2,7 @@ import type { Post } from "../types/types";
 import { FaHeart, FaRegHeart, FaRegBookmark, FaBookmark} from "react-icons/fa";
 import { useAuth } from "../contexts/authContext";
 import { useState } from "react";
+import AuthorDetails from "./AuthorDetails";
 
 export default function Article({ post }: { post: Post }) {
     const { user } = useAuth(); 
@@ -105,22 +106,23 @@ export default function Article({ post }: { post: Post }) {
                     <h2 className="text-3xl font-bold">{post.title}</h2>
 
                     <div className="text-2xl text-gray-600 flex items-center gap-4 cursor-pointer">
-{handleLikeIcon()}
+                    {handleLikeIcon()}
                     {handleBookmarkIcon()}
                     
                     </div>
                 </div>
                     <div className="text-gray-500 text-sm flex gap-2 align-center mt-1"> 
                             
-                    <img src={post.author.avatarImage} alt={post.author.name} className="inline-block w-4.5 h-4.5 rounded-full" />
+                    {/* <img src={post.author.avatarImage} alt={post.author.name} className="inline-block w-4.5 h-4.5 rounded-full" /> */}
 
-                    <span>{post.author.name} </span>
+                    <span>by {post.author.name} </span>
                     <span className="text-gray-500">{timeAgo(post.createdAt)}</span>
                     </div>
                 </div>
 
                 <p className="text-gray-600 mt-6">{post.content}</p>
 
+            <AuthorDetails author={post.author} />
             </article>
     )
 }

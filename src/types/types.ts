@@ -13,6 +13,16 @@ export type User = {
     token: string;
 }
 
+export type Comment = {
+  id: number;
+  content: string;
+  authorId: number;
+  postId: number;
+  createdAt: string;
+  author: User;
+  likes: User[];
+};
+
 
 export type Post = {
   id: number;
@@ -20,6 +30,7 @@ export type Post = {
   authorId: number;
   title: string;
   content: string;
+  comments: Comment[];
   coverImage: string;
   published: boolean;
   createdAt: string; 

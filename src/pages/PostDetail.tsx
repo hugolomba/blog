@@ -3,7 +3,7 @@ import Article from "../components/Article";
 import { useEffect, useState } from "react";
 import type { Post } from "../types/types";
 import Loading from "../components/Loading";
-
+import Comments from "../components/Comments";
 
 
 
@@ -28,7 +28,8 @@ export default function PostDetail() {
 
   return (
     <div className="">
-        {post ? <Article post={post} /> : <Loading />} 
+        {post ? <Article post={post} /> : <Loading />}
+        {post && <Comments comments={post.comments} />}
     </div>
   );
 }
