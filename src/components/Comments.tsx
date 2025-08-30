@@ -1,7 +1,10 @@
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import type { Post, AuthContextType } from "../types/types";
+import type { JSX } from "react";
 import { useAuth } from "../contexts/authContext";
 import { useState, useEffect } from "react";
+import { comment } from "postcss";
+
 
 export default function Comments({ comments }: { comments: Post['comments'] }) {
     const user = useAuth() as AuthContextType | null;
@@ -66,7 +69,20 @@ export default function Comments({ comments }: { comments: Post['comments'] }) {
         <div className="mt-8 p-4">
             <h3 className="text-xl font-semibold">Comments ({comments.length})</h3>
             <div className="flex flex-col gap-4 mt-4">
-                {comments.map(comment => (
+                {
+                    comments.map(comment => (
+                        <CommentCard comment={comment} getLikeCount={getLikeCount} handleLikeIcon={handleLikeIcon} />
+                    ))
+                }
+            </div>
+        </div>
+    );
+}
+
+function CommentCard({comment, getLikeCount, handleLikeIcon}: {comment: any, getLikeCount: (commentId: string) => number, handleLikeIcon: (commentId: string) => JSX.Element | null}) {
+
+    return (
+    
                     <div key={comment.id} className="flex flex-col border-b border-gray-300 pb-2">
                         <div className="text-gray-700 font-medium flex gap-2 items-center">
                             <img src={comment.author.avatarImage} alt={comment.author.name} className="inline-block w-10 h-10 object-cover rounded-full mr-2" />
@@ -82,8 +98,5 @@ export default function Comments({ comments }: { comments: Post['comments'] }) {
                             <span>Posted on: {new Date(comment.createdAt).toLocaleDateString()}</span>
                         </div>
                     </div>
-                ))}
-            </div>
-        </div>
-    );
+    )
 }

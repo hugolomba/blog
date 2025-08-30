@@ -5,7 +5,7 @@ export default function NewComment({ postId, userId, setComments, postComments }
         e.preventDefault();
         const content = (e.target as any).content.value;
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL_BASE}/comments`, {
+            await fetch(`${import.meta.env.VITE_API_URL_BASE}/comments`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -14,10 +14,9 @@ export default function NewComment({ postId, userId, setComments, postComments }
                 body: JSON.stringify({ content, postId, userId })
             
             });
-            const newCommentsResponse = await fetch(`${import.meta.env.VITE_API_URL_BASE}/posts/${postId}/comments`);
-            const newCommentsData = await newCommentsResponse.json();
-            console.log("New Comment:", newCommentsData);
-            setComments(newCommentsData);
+            const response = await fetch(`${import.meta.env.VITE_API_URL_BASE}/posts/${postId}/comments`);
+            const newComments = await response.json();
+            setComments(newComments);
         } catch (error) {
             console.error("Error creating comment:", error);
         }
