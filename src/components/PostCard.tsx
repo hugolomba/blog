@@ -1,5 +1,5 @@
 import type { Post } from "../types/types";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaHeart, FaRegHeart, FaRegComment } from "react-icons/fa";
 import { useAuth } from "../contexts/authContext";
 import { useState } from "react";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
@@ -13,8 +13,7 @@ export default function PostCard({ post }: { post: Post }) {
 
 
   const handleBookmarkIcon = () => {
-    if (!user) return null;
-    if (bookmarks.includes(user.id)) {
+    if (user && bookmarks.includes(user.id)) {
       return <FaBookmark className="text-blue-500" />
     } else {
       return <FaRegBookmark />
@@ -22,8 +21,9 @@ export default function PostCard({ post }: { post: Post }) {
   };
 
   const handleLikeIcon = () => {
-    if (!user) return null;
-    if (likes.includes(user.id)) {
+  
+    if (user && likes.includes(user.id)) {
+      console.log("User liked the post");
       return <FaHeart className="text-red-500" />
     } else {
       return <FaRegHeart />;
@@ -39,11 +39,12 @@ export default function PostCard({ post }: { post: Post }) {
 
       <div className="flex justify-between items-center mt-2 mb-1">
         <h3 className="text-lg font-semibold">{post.title}</h3>
-        <div className="text-gray-600 flex items-center gap-1 cursor-pointer">
-          {user ? <span>{likes.length}</span> : <span>{`${post.likes.length} like${post.likes.length > 1 ? "s" : ""}`}</span>}
-          {handleLikeIcon()}
-          {user ? <span>{bookmarks.length}</span> : <span>{`${post.savedBy.length} bookmark${post.savedBy.length > 1 ? "s" : ""}`}</span>}
-          {handleBookmarkIcon()}
+        <div className="text-gray-600 flex items-center gap-2 cursor-pointer">
+          
+          <span className="flex flex-row items-center gap-0.5"><FaRegComment /> {post.comments.length}</span>
+          <span className="flex flex-row items-center gap-0.5">{handleBookmarkIcon()} {post.savedBy.length}</span>
+          <span className="flex flex-row items-center gap-0.5">{handleLikeIcon()} {post.likes.length}</span>
+          
         </div>
       </div>
       <p className="text-gray-600 line-clamp-3">{post.content}</p>
