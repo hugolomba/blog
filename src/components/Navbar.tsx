@@ -1,5 +1,3 @@
-
-import placeholder from "../assets/images/placeholder.webp"
 import { useAuth } from "../contexts/authContext"
 import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";

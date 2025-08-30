@@ -14,7 +14,10 @@ export default function HomePage() {
         const fetchPublishedPosts = async () => {
             try {
                 const response = await axios.get(`${import.meta.env.VITE_API_URL_BASE}/posts/published`);
-                setPublishedPosts(response.data);
+                const responseSorted = response.data.sort((a: Post, b: Post) => {
+                    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+                });
+                setPublishedPosts(responseSorted);
             } catch (error) {
                 console.error("Error fetching published posts:", error);
             }
