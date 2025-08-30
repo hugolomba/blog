@@ -1,4 +1,6 @@
-export default function NewComment({ postId, userId, setComments, postComments }: { postId: number; userId: number; setComments: React.Dispatch<React.SetStateAction<any[]>>; postCo: any }) {
+export default function NewComment({ postId, userId, handleUpdateComments }: { postId: number; userId: number; handleUpdateComments: (newComment: any) => Promise<void> }) {
+
+
 
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -12,11 +14,9 @@ export default function NewComment({ postId, userId, setComments, postComments }
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
                 },
                 body: JSON.stringify({ content, postId, userId })
-            
+               
             });
-            const response = await fetch(`${import.meta.env.VITE_API_URL_BASE}/posts/${postId}/comments`);
-            const newComments = await response.json();
-            setComments(newComments);
+            handleUpdateComments(postId);
         } catch (error) {
             console.error("Error creating comment:", error);
         }

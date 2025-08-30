@@ -4,9 +4,8 @@ import { useEffect, useState } from "react";
 import type { Post } from "../types/types";
 import Loading from "../components/Loading";
 import Comments from "../components/Comments";
-import NewComment from "../components/NewComent";
+import NewComment from "../components/NewComment";
 import { useAuth } from "../contexts/authContext";
-import Register from "../components/Register";
 
 
 
@@ -16,7 +15,13 @@ export default function PostDetailPage() {
     const [comments, setComments] = useState([]);
     const { user} = useAuth();
 
-    console.log("Current user:", user);
+
+
+        const handleUpdateComments = async (postId: number) => {
+        const response = await fetch(`${import.meta.env.VITE_API_URL_BASE}/posts/${postId}/comments`);
+            const newComments = await response.json();
+            setComments(newComments);
+    };
 
     useEffect(() => {
         
@@ -51,8 +56,8 @@ export default function PostDetailPage() {
   return (
     <div className="">
         {post ? <Article post={post} /> : <Loading />}
-        {post && <Comments comments={comments} />}
-        {post && user !== null ? <NewComment postId={post.id} userId={user.id} setComments={setComments} postComments={comments} /> : loginToComment()}
+        {post && <Comments comments={comments} handleUpdateComments={handleUpdateComments} />}
+        {post && user !== null ? <NewComment postId={post.id} userId={user.id} handleUpdateComments={handleUpdateComments} /> : loginToComment()}
     </div>
   );
 }

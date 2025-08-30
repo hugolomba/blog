@@ -1,12 +1,11 @@
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import type { Post, AuthContextType } from "../types/types";
-import type { JSX } from "react";
+import type { Post, User, AuthContextType } from "../types/types";
 import { useAuth } from "../contexts/authContext";
 import { useState, useEffect } from "react";
-import { comment } from "postcss";
+import CommentCard from "./CommentCard";
 
 
-export default function Comments({ comments }: { comments: Post['comments'] }) {
+export default function Comments({ comments, handleUpdateComments }: { comments: Post['comments']; handleUpdateComments: (postId: number) => Promise<void> }) {
     const user = useAuth() as AuthContextType | null;
     const [likes, setLikes] = useState<{ commentId: string; userIds: string[] }[]>([]);
 
@@ -70,8 +69,8 @@ export default function Comments({ comments }: { comments: Post['comments'] }) {
             <h3 className="text-xl font-semibold">Comments ({comments.length})</h3>
             <div className="flex flex-col gap-4 mt-4">
                 {
-                    comments.map(comment => (
-                        <CommentCard comment={comment} getLikeCount={getLikeCount} handleLikeIcon={handleLikeIcon} />
+                    comments.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).map(comment => (
+                        <CommentCard user={user?.user} comment={comment} getLikeCount={getLikeCount} handleLikeIcon={handleLikeIcon} handleUpdateComments={handleUpdateComments} />
                     ))
                 }
             </div>
@@ -79,24 +78,3 @@ export default function Comments({ comments }: { comments: Post['comments'] }) {
     );
 }
 
-function CommentCard({comment, getLikeCount, handleLikeIcon}: {comment: any, getLikeCount: (commentId: string) => number, handleLikeIcon: (commentId: string) => JSX.Element | null}) {
-
-    return (
-    
-                    <div key={comment.id} className="flex flex-col border-b border-gray-300 pb-2">
-                        <div className="text-gray-700 font-medium flex gap-2 items-center">
-                            <img src={comment.author.avatarImage} alt={comment.author.name} className="inline-block w-10 h-10 object-cover rounded-full mr-2" />
-                            <h4 className="text-lg font-semibold inline-block">{comment.author.name}</h4>
-                        </div>
-                        
-                        <p className="text-gray-600 mt-4">{comment.content}</p>
-                        <div className="text-gray-500 text-sm flex justify-between mt-2 mb-2">
-                            <div className="text-gray-500 flex flex-row-reverse gap-2 items-center">
-                                <span>{getLikeCount(comment.id.toString())}</span>
-                                {handleLikeIcon(comment.id.toString())}
-                            </div>
-                            <span>Posted on: {new Date(comment.createdAt).toLocaleDateString()}</span>
-                        </div>
-                    </div>
-    )
-}
