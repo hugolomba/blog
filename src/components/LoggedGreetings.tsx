@@ -8,7 +8,7 @@ export default function NotLoggedGreeting({user}: {user: {name: string}}) {
           Ready to share your ideas today?
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4 ">
-            <Link to="/create-post" className="px-4 py-2 bg-white text-blue-700 font-semibold rounded-xl shadow hover:scale-105 transition">
+            <Link to="/posts/create" className="px-4 py-2 bg-white text-blue-700 font-semibold rounded-xl shadow hover:scale-105 transition">
             Create new post
             </Link>
             <Link to="/dashboard" className="px-4 py-2 bg-white text-blue-700 font-semibold rounded-xl shadow hover:scale-105 transition">

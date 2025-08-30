@@ -1,0 +1,59 @@
+import { Link, useParams } from "react-router-dom";
+import Article from "../components/Article";
+import { useEffect, useState } from "react";
+import type { Post } from "../types/types";
+import Loading from "../components/Loading";
+import Comments from "../components/Comments";
+import NewComment from "../components/NewComent";
+import { useAuth } from "../contexts/authContext";
+import Register from "../components/Register";
+
+
+
+export default function PostDetailPage() {
+    const { id } = useParams();
+    const [post, setPost] = useState<Post | null>(null);
+    const [comments, setComments] = useState([]);
+    const { user} = useAuth();
+
+    console.log("Current user:", user);
+
+    useEffect(() => {
+        
+        const fetchPost = async () => {
+            try {
+                const response = await fetch(`${import.meta.env.VITE_API_URL_BASE}/posts/${id}`, {
+                headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+            });
+
+            const data = await response.json();
+            setPost(data);
+            setComments(data.comments || []);
+            console.log("Fetched post:", data);
+                
+            } catch (error) {
+                console.error("Error fetching post:", error);
+            }
+        };
+        fetchPost();
+    }, []);
+
+    const loginToComment = () => {
+       return(
+        <div className="flex flex-col text-center p-4  bg-gray-50 space-y-2 rounded-2xl m-2">
+        <h5 className="text-xl">Please log in or register to comment.</h5>
+        <Link to="/login" className="px-1.5 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-4xl shadow">Login</Link>
+        <Link to="/register" className=" px-1.5 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-4xl shadow">Register</Link>
+       </div>
+       );
+    };
+
+  return (
+    <div className="">
+        {post ? <Article post={post} /> : <Loading />}
+        {post && <Comments comments={comments} />}
+        {post && user !== null ? <NewComment postId={post.id} userId={user.id} setComments={setComments} postComments={comments} /> : loginToComment()}
+    </div>
+  );
+}
+

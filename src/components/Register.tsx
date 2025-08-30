@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../contexts/authContext"; // caminho pro seu AuthContext
 
-export default function RegisterPage() {
+export default function Register() {
   const { register: registerUser, login } = useAuth();
 
   const [name, setName] = useState("");
