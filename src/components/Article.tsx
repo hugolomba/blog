@@ -120,7 +120,7 @@ export default function Article({ post }: { post: Post }) {
                     </div>
                 </div>
 
-                <p className="text-gray-600 mt-6">{post.content}</p>
+                <div className="prose prose-base max-w-none mt-6" dangerouslySetInnerHTML={{ __html: post.content }} />
 
             <AuthorDetails author={post.author} />
             </article>

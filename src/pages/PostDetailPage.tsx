@@ -54,7 +54,8 @@ export default function PostDetailPage() {
     };
 
   return (
-    <div className="">
+    <div className="mt-2">
+        <Link to="/" className="text-lg font-bold ml-2 cursor-pointer">← Back</Link>
         {post ? <Article post={post} /> : <Loading />}
         {post && <Comments comments={comments} handleUpdateComments={handleUpdateComments} />}
         {post && user !== null ? <NewComment postId={post.id} userId={user.id} handleUpdateComments={handleUpdateComments} /> : loginToComment()}

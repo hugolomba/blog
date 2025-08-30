@@ -1,7 +1,10 @@
+import { useAuth } from "../contexts/authContext";
+import { IoIosSend } from "react-icons/io";
+
+
+
 export default function NewComment({ postId, userId, handleUpdateComments }: { postId: number; userId: number; handleUpdateComments: (newComment: any) => Promise<void> }) {
-
-
-
+    const user = useAuth();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -23,12 +26,22 @@ export default function NewComment({ postId, userId, handleUpdateComments }: { p
     };
 
     return (
-        <div>
-            <h2>New Comment</h2>
-            <form className="flex flex-col" onSubmit={handleSubmit}>
-                <textarea name="content" placeholder="Write a comment..." className="w-full p-2 border border-gray-300 rounded-md" />
-                <button type="submit" className="mt-2 bg-blue-500 text-white p-2 rounded-md">Post Comment</button>
-            </form>
-        </div>
+     <div className="p-4 flex items-center bg-gray-50 rounded-2xl m-2 space-x-4">
+    <img 
+        src={user.user?.avatarImage} 
+        alt={user.user?.name} 
+        className="w-12 h-12 object-cover rounded-full flex-shrink-0" 
+    />
+    <form className="flex flex-1 items-center gap-2" onSubmit={handleSubmit}>
+        <textarea 
+            name="content" 
+            placeholder="Write a comment..." 
+            className="flex-1 p-2 border border-gray-300 rounded-md resize-none"
+        />
+        <button type="submit" className="bg-blue-500 text-white p-2 rounded-3xl flex-shrink-0">
+            <IoIosSend />
+        </button>
+    </form>
+</div>
     );
 }

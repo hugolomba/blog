@@ -32,7 +32,7 @@ function Navbar() {
 
   return (
     <nav className="navbar p-2 flex justify-between items-center font-poppins relative bg-white rounded-lg ">
-        <Link to="/" className="hover:text-gray-600 flex-1 text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <Link to="/" className="hover:text-gray-600 flex-1 text-3xl font-bold bg-gradient-to-b from-blue-600 to-purple-800 bg-clip-text text-transparent">
           <h1 className="inline-block">Blog</h1> 
         </Link>
     

@@ -47,8 +47,12 @@ export default function PostCard({ post }: { post: Post }) {
           
         </div>
       </div>
-      <p className="text-gray-600 line-clamp-3">{post.content}</p>
-      
+      {/* <p className="text-gray-600 line-clamp-3">{post.content}</p> */}
+      <div
+  className="prose prose-lg max-w-none line-clamp-2"
+  dangerouslySetInnerHTML={{ __html: post.content }}
+/>
+
       <div className="flex justify-between mt-2 gap-6">
         <div className="text-sm text-gray-500">Published on: {new Date(post.createdAt).toLocaleDateString()}</div>
  
