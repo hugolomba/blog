@@ -6,6 +6,7 @@ export type User = {
     followers: any[];
     following: any[];
     id: number;
+    savedPosts: Post[];
     likes: any[];
     name: string;
     posts: any[];

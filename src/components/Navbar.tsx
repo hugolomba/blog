@@ -24,7 +24,7 @@ function Navbar() {
   const handleLogout = () => {
    logout();
    setIsOpen(false);
-    navigate("/");
+  navigate("/");
   
   };
 
@@ -61,6 +61,7 @@ function Navbar() {
       {/* User menu */}
        {user &&
       <div
+        onClick={() => setIsOpen(!isOpen)}
         ref={menuRef}
         className={`absolute flex flex-col gap-2 items-center p-6 -right-1 top-0 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10 transform transition-all duration-300 ease-in-out 
           ${isOpen ? "flex opacity-100 translate-x-0" : "hidden translate-x-20 pointer-events-none"}`}

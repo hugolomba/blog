@@ -6,6 +6,7 @@ import Loading from "../components/Loading";
 import Comments from "../components/Comments";
 import NewComment from "../components/NewComment";
 import { useAuth } from "../contexts/authContext";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -14,6 +15,7 @@ export default function PostDetailPage() {
     const [post, setPost] = useState<Post | null>(null);
     const [comments, setComments] = useState([]);
     const { user} = useAuth();
+    const navigate = useNavigate();
 
 
 
@@ -55,7 +57,8 @@ export default function PostDetailPage() {
 
   return (
     <div className="mt-2">
-        <Link to="/" className="text-lg font-bold ml-2 cursor-pointer">← Back</Link>
+        <button onClick={() => navigate(-1)} className="text-lg font-bold ml-2 cursor-pointer">← Back</button>
+
         {post ? <Article post={post} /> : <Loading />}
         {post && <Comments comments={comments} handleUpdateComments={handleUpdateComments} />}
         {post && user !== null ? <NewComment postId={post.id} userId={user.id} handleUpdateComments={handleUpdateComments} /> : loginToComment()}
