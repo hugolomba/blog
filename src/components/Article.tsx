@@ -4,7 +4,7 @@ import { MdDelete, MdEdit } from "react-icons/md";
 import { useAuth } from "../contexts/authContext";
 import { useState } from "react";
 import AuthorDetails from "./AuthorDetails";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Article({ post }: { post: Post }) {
     const { user } = useAuth(); 
@@ -145,9 +145,9 @@ export default function Article({ post }: { post: Post }) {
                 </div>
             {post.author.id === user?.id && (
                 <div className="flex mt-4 items-center gap-2">
-                    <button className="bg-blue-500 text-white rounded hover:bg-blue-600 flex flex-row items-center gap-1 px-1 py-1">
+                   <Link to={`/post/${post.id}/edit`} className="bg-blue-500 text-white rounded hover:bg-blue-600 flex flex-row items-center gap-1 px-1 py-1">
                         Edit <MdEdit />
-                    </button>
+                    </Link>
                     <button onClick={() => setIsDialogOpen(true)} className="bg-red-500 text-white rounded hover:bg-red-600 flex flex-row items-center gap-1 px-1 py-1">
                         Delete <MdDelete />
                     </button>
@@ -165,7 +165,7 @@ export default function Article({ post }: { post: Post }) {
     )
 }
 
-function ConfirmationDialog({ isOpen, onClose, onConfirm }) {
+function ConfirmationDialog({ isOpen, onClose, onConfirm }: { isOpen: boolean; onClose: () => void; onConfirm: () => void }) {
     if (!isOpen) return null;
 
     return (
