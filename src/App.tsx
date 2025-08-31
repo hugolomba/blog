@@ -5,6 +5,7 @@ import RegisterPage from './components/Register'
 import HomePage from './pages/HomePage'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PostDetailPage from './pages/PostDetailPage'
+import ProfilePage from './pages/ProfilePage'
 
 
 import NewPostPage from './pages/NewPostPage'
@@ -22,6 +23,7 @@ export default function AppRouter() {
         <Route path="/post/:id" element={<PostDetailPage />} />
         <Route path='/post/create' element={<NewPostPage />} />
         <Route path='/post/:id/edit' element={<EditPostPage />} />
+        <Route path='/profile/:id' element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -88,7 +88,7 @@ function Navbar() {
             <Link to="/dashboard" className="block px-4 py-2 text-sm bg-amber-400 bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:bg-gray-100 rounded-lg">Dashboard</Link>
           </li>
           <li>
-            <Link to="/profile" className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100">Profile</Link>
+            <Link to={`/profile/${user.id}`} className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100">Profile</Link>
           </li>
           <li>
             <Link to="/settings" className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100">Settings</Link>

@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 
 export default function PostCard({ post }: { post: Post }) {
+  console.log("Rendering PostCard for post:", post);
   const { user } = useAuth();
   const [likes, setLikes] = useState(post.likes.map((like: any) => like.userId)); // Array of user IDs who liked the post
   const [bookmarks, setBookmarks] = useState(post.savedBy.map((bookmark: any) => bookmark.userId)); // Array of user IDs who bookmarked the post

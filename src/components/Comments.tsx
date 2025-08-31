@@ -70,7 +70,7 @@ export default function Comments({ comments, handleUpdateComments }: { comments:
             <div className="flex flex-col gap-4 mt-4">
                 {
                     comments.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).map(comment => (
-                        <CommentCard user={user?.user} comment={comment} getLikeCount={getLikeCount} handleLikeIcon={handleLikeIcon} handleUpdateComments={handleUpdateComments} />
+                        <CommentCard key={comment.id} user={user?.user} comment={comment} getLikeCount={getLikeCount} handleLikeIcon={handleLikeIcon} handleUpdateComments={handleUpdateComments} />
                     ))
                 }
             </div>
