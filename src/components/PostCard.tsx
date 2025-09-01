@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 
 
 export default function PostCard({ post }: { post: Post }) {
-  console.log("Rendering PostCard for post:", post);
   const { user } = useAuth();
   const [likes, setLikes] = useState(post.likes.map((like: any) => like.userId)); // Array of user IDs who liked the post
   const [bookmarks, setBookmarks] = useState(post.savedBy.map((bookmark: any) => bookmark.userId)); // Array of user IDs who bookmarked the post
@@ -58,7 +57,7 @@ export default function PostCard({ post }: { post: Post }) {
         <div className="text-sm text-gray-500">Published on: {new Date(post.createdAt).toLocaleDateString()}</div>
  
          <div className="text-gray-500 text-sm flex gap-2 align-center"> 
-          <span>{post.author.name} </span>
+          <span>{post.author.name}</span>
           <img src={post.author.avatarImage} alt={post.author.name} className="inline-block w-4.5 h-4.5 rounded-full mr-2" />
          </div>
       </div>

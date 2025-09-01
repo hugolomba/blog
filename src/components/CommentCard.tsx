@@ -27,7 +27,7 @@ export default function CommentCard({user, comment, getLikeCount, handleLikeIcon
                     <div key={comment.id} className="flex flex-col border-b border-gray-300 pb-2 relative">
                         <div className="text-gray-700 font-medium flex gap-2 items-center">
                             <img src={comment.author.avatarImage} alt={comment.author.name} className="inline-block w-10 h-10 object-cover rounded-full mr-2" />
-                            <h4 className="text-lg font-semibold inline-block">{comment.author.name}</h4>
+                            <h4 className="text-lg font-semibold inline-block">{comment.author.name} {comment.author.surname}</h4>
                         </div>
                         
                         <p className="text-gray-600 mt-4">{comment.content}</p>

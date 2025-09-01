@@ -138,7 +138,7 @@ export default function Article({ post }: { post: Post }) {
                             
                     {/* <img src={post.author.avatarImage} alt={post.author.name} className="inline-block w-4.5 h-4.5 rounded-full" /> */}
 
-                    <span className="font-bold">by {post.author.name === user?.name ? "You" : post.author.name} </span>
+                    <span className="font-bold">by {post.author.name === user?.name ? "You" : `${post.author.name} ${post.author.surname}`} </span>
                     {/* {post.author.id === user?.id ? (<span>Editar</span> "Apagar")} */}
                     <span className="text-gray-500">{timeAgo(post.createdAt)}</span>
                     </div>

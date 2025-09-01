@@ -7,6 +7,7 @@ export default function Register() {
   const { register: registerUser, login, user, editUser } = useAuth();
 
   const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,6 +20,7 @@ export default function Register() {
   const [errors, setErrors] = useState({
     name: "",
     username: "",
+    surname: "",
     email: "",
     password: "",
     avatarImage: "",
@@ -29,6 +31,7 @@ export default function Register() {
   useEffect(() => {
     if (isEditMode && user) {
       setName(user.name || "");
+      setSurname(user.surname || "");
       setUsername(user.username || "");
       setEmail(user.email || "");
       setBio(user.bio || "");
@@ -44,6 +47,12 @@ export default function Register() {
       newErrors.name = "Name is required and must be at least 2 characters";
       valid = false;
     }
+
+    if (!surname || surname.length < 2) {
+      newErrors.surname = "Surname is required and must be at least 2 characters";
+      valid = false;
+    }
+
     if (!username || username.length < 4) {
       newErrors.username = "Username is required and must be at least 4 characters";
       valid = false;
@@ -88,9 +97,9 @@ export default function Register() {
     try {
       setIsLoading(true);
       if (isEditMode && user) {
-        await editUser(user.id, name, username, email, bio, avatarImage);
+        await editUser(user.id, surname, name, username, email, bio, avatarImage);
       } else {
-        await registerUser(name, username, email, password, bio, avatarImage!);
+        await registerUser(name, suername, username, email, password, bio, avatarImage!);
         // await login(username, password);
       }
     } catch (err) {
@@ -119,6 +128,16 @@ export default function Register() {
           className={`px-2 py-1 rounded border ${errors.name ? "border-red-500" : ""}`}
         />
         {errors.name && <span className="text-red-500 text-sm">{errors.name}</span>}
+
+          <input
+          type="text"
+          placeholder="Surname"
+          value={surname}
+          onChange={(e) => setSurname(e.target.value)}
+          className={`px-2 py-1 rounded border ${errors.surname ? "border-red-500" : ""}`}
+        />
+        {errors.surname && <span className="text-red-500 text-sm">{errors.surname}</span>}
+
 
         <input
           type="text"

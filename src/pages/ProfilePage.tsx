@@ -58,7 +58,7 @@ function ProfileHeader( {userProfile}: { userProfile: User }) {
         <img className="w-22 h-22 rounded-full object-cover" src={userProfile.avatarImage} alt="User Profile Picture" />
         {userProfile.id === user.id && <Link to={`/profile/${userProfile.id}/edit`} className="text-xs text-gray-500 bg-blue-200 px-2 py-1 rounded-2xl">Edit Profile</Link>}
         <div className="flex flex-col items-center">
-            <h3 className="text-xl font-bold leading-tight">{userProfile.name} Lomba</h3>
+            <h3 className="text-xl font-bold leading-tight">{userProfile.name} {userProfile.surname}</h3>
             <h4 className="text-sm text-gray-500 leading-tight">@{userProfile.username}</h4>
         </div>
         

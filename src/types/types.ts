@@ -12,6 +12,7 @@ export type User = {
     posts: any[];
     username: string;
     token: string;
+    surname: string;
 }
 
 export type Comment = {
