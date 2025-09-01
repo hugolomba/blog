@@ -1,8 +1,10 @@
-import { useState } from "react";
-import { useAuth } from "../contexts/authContext"; // caminho pro seu AuthContext
+import { useState, useEffect } from "react";
+import { useAuth } from "../contexts/authContext"; 
+import Loading from "./Loading";
+import { Link } from "react-router-dom";
 
 export default function Register() {
-  const { register: registerUser, login } = useAuth();
+  const { register: registerUser, login, user, editUser } = useAuth();
 
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
@@ -10,6 +12,9 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [bio, setBio] = useState("");
   const [avatarImage, setAvatarImage] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [userCreated, setUserCreated] = useState(false);
+  const [preview, setPreview] = useState<string | null>(null);
 
   const [errors, setErrors] = useState({
     name: "",
@@ -19,16 +24,28 @@ export default function Register() {
     avatarImage: "",
   });
 
+  const isEditMode = !!user;
+
+  useEffect(() => {
+    if (isEditMode && user) {
+      setName(user.name || "");
+      setUsername(user.username || "");
+      setEmail(user.email || "");
+      setBio(user.bio || "");
+      setPreview(user.avatarImage);
+    }
+  }, [isEditMode, user]);
+
   const validateForm = () => {
     let valid = true;
     const newErrors = { name: "", username: "", email: "", password: "", avatarImage: "" };
 
-    if (!name) {
-      newErrors.name = "Name is required";
+    if (!name || name.length < 2) {
+      newErrors.name = "Name is required and must be at least 2 characters";
       valid = false;
     }
-    if (!username) {
-      newErrors.username = "Username is required";
+    if (!username || username.length < 4) {
+      newErrors.username = "Username is required and must be at least 4 characters";
       valid = false;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -39,20 +56,29 @@ export default function Register() {
       newErrors.email = "Invalid email";
       valid = false;
     }
-    if (!password) {
-      newErrors.password = "Password is required";
-      valid = false;
-    } else if (password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
-      valid = false;
-    }
-    if (!avatarImage) {
-      newErrors.avatarImage = "Avatar image is required";
-      valid = false;
+    if (!isEditMode) {
+      if (!password) {
+        newErrors.password = "Password is required";
+        valid = false;
+      } else if (password.length < 6) {
+        newErrors.password = "Password must be at least 6 characters";
+        valid = false;
+      }
+      if (!avatarImage) {
+        newErrors.avatarImage = "Avatar image is required";
+        valid = false;
+      }
     }
 
     setErrors(newErrors);
     return valid;
+  };
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.length) {
+      setAvatarImage(e.target.files[0]);
+      setPreview(URL.createObjectURL(e.target.files[0]));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -60,17 +86,28 @@ export default function Register() {
     if (!validateForm()) return;
 
     try {
-      await registerUser(name, username, email, password, bio, avatarImage!);
-      await login(username, password); // loga o usuário automaticamente
-      // Aqui você pode redirecionar, ex: navigate("/dashboard")
+      setIsLoading(true);
+      if (isEditMode && user) {
+        await editUser(user.id, name, username, email, bio, avatarImage);
+      } else {
+        await registerUser(name, username, email, password, bio, avatarImage!);
+        // await login(username, password);
+      }
     } catch (err) {
-      alert("Registration failed. Try again.");
+      // alert("Registration failed. Try again.");
+      console.error("Registration error:", err);
+    } finally {
+      setIsLoading(false);
+      setUserCreated(true);
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-      <form
+    <div className="flex flex-col items-center mt-6">
+      <h1 className="text-2xl font-bold">{isEditMode ? "Edit Profile" : "Register"}</h1>
+      {userCreated && <UserCreated isEditMode={isEditMode} />}
+      {isLoading && <Loading />}
+      {!userCreated && !isLoading && <form
         onSubmit={handleSubmit}
         className="flex flex-col gap-2 w-80 bg-white p-6 rounded shadow"
       >
@@ -101,14 +138,18 @@ export default function Register() {
         />
         {errors.email && <span className="text-red-500 text-sm">{errors.email}</span>}
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className={`px-2 py-1 rounded border ${errors.password ? "border-red-500" : ""}`}
-        />
-        {errors.password && <span className="text-red-500 text-sm">{errors.password}</span>}
+        {!isEditMode && (
+          <>
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={`px-2 py-1 rounded border ${errors.password ? "border-red-500" : ""}`}
+            />
+            {errors.password && <span className="text-red-500 text-sm">{errors.password}</span>}
+          </>
+        )}
 
         <textarea
           placeholder="Bio (optional)"
@@ -117,20 +158,47 @@ export default function Register() {
           className="px-2 py-1 rounded border"
         />
 
-        <input
-          type="file"
-          onChange={(e) => setAvatarImage(e.target.files ? e.target.files[0] : null)}
-          className={`px-2 py-1 rounded border ${errors.avatarImage ? "border-red-500" : ""}`}
-        />
-        {errors.avatarImage && <span className="text-red-500 text-sm">{errors.avatarImage}</span>}
+           {preview && (
+            <div className="flex flex-col gap-2">
+              <img src={preview} alt="Cover Preview" className="w-full max-h-64 object-cover rounded" />
+            </div>
+          )}
+    
+            <input
+              type="file"
+              onChange={handleFileChange}
+              className={`px-2 py-1 rounded border ${errors.avatarImage ? "border-red-500" : ""}`}
+            />
+            {errors.avatarImage && <span className="text-red-500 text-sm">{errors.avatarImage}</span>}
+         
+      
 
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded mt-2 hover:bg-blue-700"
-        >
-          Register
-        </button>
-      </form>
+         <button
+           type="submit"
+           className="bg-blue-600 text-white px-4 py-2 rounded mt-2 hover:bg-blue-700"
+         >
+           {isEditMode ? "Save Changes" : "Register"}
+         </button>
+       
+      </form>}
+    </div>
+  );
+}
+
+
+type UserCreatedProps = { isEditMode: boolean };
+function UserCreated({ isEditMode }: UserCreatedProps) {
+  return (
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 gap-4">
+      <p className="text-green-500">
+        {isEditMode ? "Profile updated successfully!" : "User created successfully!"}
+      </p>
+      <Link className="text-blue-500 hover:underline" to="/login">
+        Go to Login
+      </Link>
+      <Link className="text-blue-500 hover:underline" to="/">
+        Go to Home
+      </Link>
     </div>
   );
 }

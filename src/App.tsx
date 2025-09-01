@@ -1,7 +1,7 @@
 import './App.css'
-import LoginPage from './components/Login'
+import LoginPage from './pages/LoginPage'
 import Navbar from './components/Navbar'
-import RegisterPage from './components/Register'
+import RegisterPage from './pages/RegisterPage'
 import HomePage from './pages/HomePage'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PostDetailPage from './pages/PostDetailPage'
@@ -10,6 +10,7 @@ import ProfilePage from './pages/ProfilePage'
 
 import NewPostPage from './pages/NewPostPage'
 import EditPostPage from './pages/EditPostPage'
+import EditProfilePage from './pages/EditProfilePage'
 
 
 export default function AppRouter() {
@@ -24,6 +25,7 @@ export default function AppRouter() {
         <Route path='/post/create' element={<NewPostPage />} />
         <Route path='/post/:id/edit' element={<EditPostPage />} />
         <Route path='/profile/:id' element={<ProfilePage />} />
+        <Route path='/profile/:id/edit' element={<EditProfilePage />} />  
       </Routes>
     </BrowserRouter>
   );

@@ -12,12 +12,13 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const token = localStorage.getItem("token");
 
 
 
   // Load user from localStorage on start
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
     if (!token) return;
 
     const fetchUser = async () => {
@@ -77,8 +78,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   };
 
+  // Edit User
+  const editUser = async (id: string, name: string, username: string, email: string, bio: string, avatarImage: File | null) => {
+    try {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("username", username);
+      formData.append("email", email);
+      formData.append("bio", bio);
+      if (avatarImage) {
+        formData.append("avatarImage", avatarImage);
+      }
+
+      const response = await axios.put(`${import.meta.env.VITE_API_URL_BASE}/users/edit/${id}`, formData,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      const data = response.data;
+      setUser(data);
+    } catch (err) {
+      console.error("Edit user error:", err);
+    }
+  }; 
+
   return (
-    <AuthContext.Provider value={{ user, register, login, logout }}>
+    <AuthContext.Provider value={{ user, register, login, logout, editUser }}>
       {children}
     </AuthContext.Provider>
   );

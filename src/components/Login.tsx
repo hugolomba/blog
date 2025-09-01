@@ -22,7 +22,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center mt-4">
       <form onSubmit={handleSubmit} className="flex flex-col gap-2 w-64">
         <input
           type="text"

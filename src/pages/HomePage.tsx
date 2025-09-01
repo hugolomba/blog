@@ -1,12 +1,15 @@
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Header from "../components/Hero";
 import axios from "axios";
 import type { Post } from "../types/types";
 import RecentPosts from "../components/RecentPosts";
+import { SearchContext } from "../contexts/SearchContext";
+import SearchResults from "../components/SearchResults";
 
 export default function HomePage() {
     const [publishedPosts, setPublishedPosts] = useState<Post[]>([]);
+    const { searchResults } = useContext(SearchContext);
 
     console.log("Published Posts:", publishedPosts);
 
@@ -28,7 +31,7 @@ export default function HomePage() {
   return (
     <div>
       <Header />
-      <RecentPosts publishedPosts={publishedPosts} />
+      {searchResults ? <SearchResults searchResults={searchResults} /> : <RecentPosts publishedPosts={publishedPosts} />}
     </div>
   );
 }   

@@ -35,18 +35,18 @@ function Navbar() {
         </Link>
     
 
-    {user && <div className="flex-1 max-w-md mx-6">
+    {/* {user && <div className="flex-1 max-w-md mx-6">
           <input
             type="text"
             placeholder="Search..."
             className="w-full flex-1 px-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        </div>}
+        </div>} */}
 
       {user ? <div onClick={() => setIsOpen(!isOpen)}>
         <img
           className="w-10 h-10 object-cover rounded-full cursor-pointer"
-          src={user ? user.avatarImage : placeholder}
+          src={user.avatarImage}
           alt="User avatar"
         />
       </div> : <div className="flex items-center gap-3">

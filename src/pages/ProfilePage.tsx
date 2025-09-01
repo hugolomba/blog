@@ -56,7 +56,7 @@ function ProfileHeader( {userProfile}: { userProfile: User }) {
     <>
     <div className="flex flex-col items-center gap-2 mt-6">
         <img className="w-22 h-22 rounded-full object-cover" src={userProfile.avatarImage} alt="User Profile Picture" />
-        {userProfile.id === user.id && <button className="text-xs text-gray-500 bg-blue-200 px-2 py-1 rounded-2xl">Edit Profile</button>}
+        {userProfile.id === user.id && <Link to={`/profile/${userProfile.id}/edit`} className="text-xs text-gray-500 bg-blue-200 px-2 py-1 rounded-2xl">Edit Profile</Link>}
         <div className="flex flex-col items-center">
             <h3 className="text-xl font-bold leading-tight">{userProfile.name} Lomba</h3>
             <h4 className="text-sm text-gray-500 leading-tight">@{userProfile.username}</h4>

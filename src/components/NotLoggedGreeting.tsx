@@ -1,5 +1,6 @@
-import { FiSearch } from "react-icons/fi";
+
 import { Link } from "react-router-dom";
+import Search from "./Search";
 
 export default function NotLoggedGreeting() {
   return (
@@ -12,16 +13,7 @@ export default function NotLoggedGreeting() {
         Create your account now
       </Link>
       <h3 className="text-center text-gray-600 mt-8">Feel free to explore and enjoy reading!</h3>
-      <form className="w-full flex items-center relative mt-1.5">
-      <label htmlFor="search" className="sr-only">Search Articles</label>
-      <FiSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
-      <input
-        type="text"
-        id="search"
-        placeholder="Search for articles or authors..."
-        className="w-full pl-12 pr-4 py-3 rounded-xl bg-blue-50 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-    </form>
+      <Search />
     </section>
   );
 }
