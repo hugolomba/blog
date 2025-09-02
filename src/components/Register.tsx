@@ -146,6 +146,7 @@ export default function Register() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             className={`px-2 py-1 rounded border ${errors.username ? "border-red-500" : ""}`}
+            autoComplete="username"
           />
           {errors.username && <span className="text-red-500 text-sm">{errors.username}</span>}
 
@@ -166,6 +167,7 @@ export default function Register() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className={`px-2 py-1 rounded border ${errors.password ? "border-red-500" : ""}`}
+                autoComplete="new-password"
               />
               {errors.password && <span className="text-red-500 text-sm">{errors.password}</span>}
             </>

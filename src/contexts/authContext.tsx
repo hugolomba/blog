@@ -57,6 +57,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       console.log("user created", response.data);
     } catch (err) {
       console.error("Sign up error:", err);
+      return Promise.reject(err);
     }
   };
 
@@ -70,6 +71,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     } catch (err) {
         console.error("Login error:", err);
+        return Promise.reject(err);
     }
   };
 
