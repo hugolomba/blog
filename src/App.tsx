@@ -6,11 +6,13 @@ import HomePage from './pages/HomePage'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PostDetailPage from './pages/PostDetailPage'
 import ProfilePage from './pages/ProfilePage'
+import ErrorPage from './pages/ErrorPage'
 
 
 import NewPostPage from './pages/NewPostPage'
 import EditPostPage from './pages/EditPostPage'
 import EditProfilePage from './pages/EditProfilePage'
+import SettingsPage from './pages/SettingsPage'
 
 
 export default function AppRouter() {
@@ -26,6 +28,8 @@ export default function AppRouter() {
         <Route path='/post/:id/edit' element={<EditPostPage />} />
         <Route path='/profile/:id' element={<ProfilePage />} />
         <Route path='/profile/:id/edit' element={<EditProfilePage />} />  
+        <Route path='/settings' element={<SettingsPage />} />
+        <Route path='*' element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
   );

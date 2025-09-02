@@ -99,9 +99,6 @@ export default function Article({ post }: { post: Post }) {
     };
 
     const handlePostDelete = async () => {
-      
-   
-
       try {
         await fetch(`${import.meta.env.VITE_API_URL_BASE}/posts/${post.id}`, {
           method: "DELETE",
