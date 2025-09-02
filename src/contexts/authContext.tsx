@@ -38,24 +38,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     fetchUser();
   }, []);
 
-  // SignUp
-  const register = async (name: string, username: string, surname: string, email: string, password: string, bio: string, avatarImage: File) => {
+  // Register
+  const register = async (name: string, surname: string, username: string, email: string, password: string, bio: string, avatarImage: File) => {
     try {
       const formData = new FormData();
       formData.append("name", name);
-      formData.append("username", username);
       formData.append("surname", surname);
+      formData.append("username", username);
       formData.append("email", email);
       formData.append("password", password);
       formData.append("bio", bio);
       formData.append("avatarImage", avatarImage);
 
-      console.log("surnamen front", surname);
-
       const response = await axios.post(`${import.meta.env.VITE_API_URL_BASE}/auth/register`, formData);
-      const data = response.data; // { name, token }
-      setUser(data);
+      // const data = response.data; // { name, token }
+      // setUser(data);
       // localStorage.setItem("token", data.token);
+      console.log("user created", response.data);
     } catch (err) {
       console.error("Sign up error:", err);
     }
