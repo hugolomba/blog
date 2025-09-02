@@ -29,7 +29,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             const data = response.data;
             setUser(data);
 
-            console.log("User fetched from token:", data);
+         
         } catch (error) {
             console.error("Error fetching user:", error);
             localStorage.removeItem("token");
@@ -51,10 +51,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       formData.append("avatarImage", avatarImage);
 
       const response = await axios.post(`${import.meta.env.VITE_API_URL_BASE}/auth/register`, formData);
-      // const data = response.data; // { name, token }
-      // setUser(data);
-      // localStorage.setItem("token", data.token);
-      console.log("user created", response.data);
     } catch (err) {
       console.error("Sign up error:", err);
       return Promise.reject(err);
@@ -98,7 +94,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      console.log("Data sent", formData);
+
       const data = await response.data;
       setUser(data);
     } catch (err) {

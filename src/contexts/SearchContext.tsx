@@ -1,23 +1,28 @@
 import { createContext, useState } from "react";
 import type { ReactNode } from "react";
-import type { Post } from "../types/types";
+import type { Post, User } from "../types/types";
 
 interface SearchContextType {
   searchResults: Post[] | null;
   setSearchResults: React.Dispatch<React.SetStateAction<Post[] | null>>;
+  searchAuthorsResults: User[] | null;
+  setSearchAuthorsResults: React.Dispatch<React.SetStateAction<User[] | null>>;
 }
 
 export const SearchContext = createContext<SearchContextType>({
   searchResults: null,
-  setSearchResults: () => {}
+  setSearchResults: () => {},
+  searchAuthorsResults: null,
+  setSearchAuthorsResults: () => {}
 });
 
 export function SearchProvider({ children }: { children: ReactNode }) {
   const [searchResults, setSearchResults] = useState<Post[] | null>(null);
+ const [searchAuthorsResults, setSearchAuthorsResults] = useState<User[] | null>(null);
 
 
   return (
-    <SearchContext.Provider value={{ searchResults, setSearchResults }}>
+    <SearchContext.Provider value={{ searchResults, setSearchResults, searchAuthorsResults, setSearchAuthorsResults }}>
       {children}
     </SearchContext.Provider>
   );

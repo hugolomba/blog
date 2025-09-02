@@ -24,7 +24,6 @@ export default function ProfilePage() {
         const res = await fetch(`${import.meta.env.VITE_API_URL_BASE}/users/${id}`);
         const data = await res.json();
         setUserProfile(data);
-        console.log("Fetched user profile:", data);
       } catch (err) {
         console.error("Error fetching user profile:", err);
       }
@@ -56,7 +55,7 @@ function ProfileHeader( {userProfile}: { userProfile: User }) {
     <>
     <div className="flex flex-col items-center gap-2 mt-6">
         <img className="w-22 h-22 rounded-full object-cover" src={userProfile.avatarImage} alt="User Profile Picture" />
-        {userProfile.id === user.id && <Link to={`/profile/${userProfile.id}/edit`} className="text-xs text-gray-500 bg-blue-200 px-2 py-1 rounded-2xl">Edit Profile</Link>}
+        {userProfile.id === user?.id && <Link to={`/profile/${userProfile.id}/edit`} className="text-xs text-gray-500 bg-blue-200 px-2 py-1 rounded-2xl">Edit Profile</Link>}
         <div className="flex flex-col items-center">
             <h3 className="text-xl font-bold leading-tight">{userProfile.name} {userProfile.surname}</h3>
             <h4 className="text-sm text-gray-500 leading-tight">@{userProfile.username}</h4>
@@ -119,7 +118,6 @@ function ProfileComments({ userProfile }: { userProfile: User }) {
 }
 
 function ProfileCommentCard({ comment }) {
-  console.log("Rendering ProfileCommentCard for comment:", comment);
 
     return (
       <Link to={`/post/${comment.postId}`}>
@@ -152,7 +150,6 @@ function ProfileSavedPosts({ userProfile }: { userProfile: User }) {
 
 function ProfileSavedPostCard({ post }: { post: Post }) {
 
-  console.log("Rendering ProfileSavedPostCard for post:", post);
 
     return (
         <Link to={`/post/${post.post.id}`}>

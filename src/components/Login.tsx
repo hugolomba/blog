@@ -14,7 +14,6 @@ export default function Login() {
     setError("")
     try {
       const response = await login(username, password);
-      console.log("Login response:", response);
       if (localStorage.getItem("token")) {
         navigate("/");
       }

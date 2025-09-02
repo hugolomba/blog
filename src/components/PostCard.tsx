@@ -23,7 +23,6 @@ export default function PostCard({ post }: { post: Post }) {
   const handleLikeIcon = () => {
   
     if (user && likes.includes(user.id)) {
-      console.log("User liked the post");
       return <FaHeart className="text-red-500" />
     } else {
       return <FaRegHeart />;

@@ -38,7 +38,6 @@ export default function Article({ post }: { post: Post }) {
 }
 
   const handleLike = async () => {
-    console.log("Like button clicked", post.id);
     try {
       // Call API to like the post
       await fetch(`${import.meta.env.VITE_API_URL_BASE}/posts/${post.id}/like`, {
@@ -60,7 +59,6 @@ export default function Article({ post }: { post: Post }) {
 
   const handleBookmark = async () => {
     if (!user) return;
-    console.log("Bookmark button clicked", post.id);
 
     try {
       await fetch(`${import.meta.env.VITE_API_URL_BASE}/posts/${post.id}/save`, {
@@ -107,7 +105,6 @@ export default function Article({ post }: { post: Post }) {
             "Authorization": `Bearer ${localStorage.getItem("token")}`
           }
         });
-        console.log("Post deleted successfully");
       } catch (error) {
         console.error("Error deleting post:", error);
       } finally {

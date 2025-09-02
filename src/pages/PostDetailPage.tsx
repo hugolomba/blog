@@ -36,7 +36,6 @@ export default function PostDetailPage() {
             const data = await response.json();
             setPost(data);
             setComments(data.comments || []);
-            console.log("Fetched post:", data);
                 
             } catch (error) {
                 console.error("Error fetching post:", error);

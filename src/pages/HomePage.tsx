@@ -11,7 +11,7 @@ export default function HomePage() {
     const [publishedPosts, setPublishedPosts] = useState<Post[]>([]);
     const { searchResults } = useContext(SearchContext);
 
-    console.log("Published Posts:", publishedPosts);
+
 
     useEffect(() => {
         const fetchPublishedPosts = async () => {

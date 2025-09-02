@@ -13,6 +13,7 @@ import NewPostPage from './pages/NewPostPage'
 import EditPostPage from './pages/EditPostPage'
 import EditProfilePage from './pages/EditProfilePage'
 import SettingsPage from './pages/SettingsPage'
+import PrivateRoute from './utils/PrivateRoute'
 
 
 export default function AppRouter() {
@@ -24,11 +25,11 @@ export default function AppRouter() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/post/:id" element={<PostDetailPage />} />
-        <Route path='/post/create' element={<NewPostPage />} />
-        <Route path='/post/:id/edit' element={<EditPostPage />} />
+        <Route path='/post/create' element={<PrivateRoute><NewPostPage /></PrivateRoute>} />
+        <Route path='/post/:id/edit' element={<PrivateRoute><EditPostPage /></PrivateRoute>} />
         <Route path='/profile/:id' element={<ProfilePage />} />
-        <Route path='/profile/:id/edit' element={<EditProfilePage />} />  
-        <Route path='/settings' element={<SettingsPage />} />
+        <Route path='/profile/:id/edit' element={<PrivateRoute><EditProfilePage /></PrivateRoute>} />
+        <Route path='/settings' element={<PrivateRoute><SettingsPage /></PrivateRoute>} />
         <Route path='*' element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
