@@ -53,8 +53,8 @@ export type SearchResultsProps = {
 
 export type AuthContextType = {
   user: User | null;
-  register: (name: string, username: string, email: string, password: string, bio: string, avatarImage: File) => Promise<void>;
+  register: (name: string, surname: string, username: string, email: string, password: string, bio: string, avatarImage: File) => Promise<void>;
   login: (username: string, password: string) => Promise<void>;
   logout: () => void;
-  editUser: (id: string, name: string, username: string, email: string, bio: string, avatarImage: File | null) => Promise<void>;
+  editUser: (id: number, name: string, surname: string, username: string, email: string, bio: string, avatarImage: File | null) => Promise<void>;
 }
