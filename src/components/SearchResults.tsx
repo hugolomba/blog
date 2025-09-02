@@ -17,7 +17,7 @@ export default function SearchResults({ searchResults }: SearchResultsProps) {
     <section className="mx-5 flex flex-col relative">
       <h2 className="text-xl font-poppins">Search Results</h2>
       <div className=" top-0 right-0 flex justify-between space-x-2 text-xs">
-        <div className="flex flex-row ga">
+        <div className="flex flex-row gap-1">
         <button
           className={`px-2 py-1 rounded border ${searchType === "articles" ? "bg-blue-500 text-white border-blue-500" : "bg-white text-black border-gray-300"}`}
           onClick={() => setSearchType("articles")}

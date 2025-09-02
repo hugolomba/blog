@@ -23,7 +23,7 @@ export default function Search() {
         setSearchAuthorsResults(authorResults.data);
         console.log("Search results set in context:", searchAuthorsResults);
 
-      // setQuery("");
+       setQuery("");
 
 
     } catch (error) {
