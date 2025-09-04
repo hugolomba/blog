@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import type { Post, User, Comment } from "../types/types";
+import type { Post, User, Comment, SavedPost } from "../types/types";
 import { FaRegHeart, FaRegComment, FaRegBookmark } from "react-icons/fa";
 import { useAuth } from "../contexts/authContext";
 
@@ -65,6 +65,7 @@ function ProfileHeader({ userProfile }: { userProfile: User }) {
 }
 
 function ProfileArticles({ userProfile }: { userProfile: User }) {
+    console.log("User Profile Posts:", userProfile.posts);
   return (
     <div className="mt-4 flex flex-col gap-4">
       <h3 className="text-md font-bold">{userProfile.posts.length} Articles</h3>
@@ -125,14 +126,15 @@ function ProfileSavedPosts({ userProfile }: { userProfile: User }) {
   return (
     <div className="mt-4 flex flex-col gap-4">
       <h3 className="text-md font-bold">{userProfile.savedPosts.length} Saved Posts</h3>
-      {userProfile.savedPosts.map((post) => (
-        <ProfileSavedPostCard key={post.id} post={post} />
+      {userProfile.savedPosts.map((saved) => (
+        <ProfileSavedPostCard key={saved.id} saved={saved} />
       ))}
     </div>
   );
 }
 
-function ProfileSavedPostCard({ post }: { post: Post }) {
+function ProfileSavedPostCard({ saved }: { saved: SavedPost }) {
+  const { post } = saved;
   return (
     <Link to={`/post/${post.id}`}>
       <div className="flex justify-between gap-4 h-25">

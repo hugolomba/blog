@@ -6,7 +6,7 @@ export type User = {
     followers: any[];
     following: any[];
     id: number;
-    savedPosts: Post[];
+    savedPosts: SavedPost[];
     likes: any[];
     name: string;
     posts: any[];
@@ -14,6 +14,14 @@ export type User = {
     token: string;
     surname: string;
 }
+
+export type SavedPost = {
+  id: number;
+  postId: number;
+  userId: number;
+  createdAt: string;
+  post: Post;
+};
 
 export type Comment = {
   id: number;
