@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import type { Post, User, Comment, SavedPost } from "../types/types";
 import { FaRegHeart, FaRegComment, FaRegBookmark } from "react-icons/fa";
 import { useAuth } from "../contexts/authContext";
 import Loading from "../components/Loading";
 
 export default function ProfilePage() {
-  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [userProfile, setUserProfile] = useState<User | null>(null);
   const [selectedSection, setSelectedSection] = useState<"articles" | "comments" | "savedPosts">("articles");

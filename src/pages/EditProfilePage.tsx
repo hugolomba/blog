@@ -1,8 +1,6 @@
 import Register from "../components/Register";
-import { useNavigate } from "react-router-dom";
 
 export default function EditProfilePage() {
-  const navigate = useNavigate();
 
 
   return (

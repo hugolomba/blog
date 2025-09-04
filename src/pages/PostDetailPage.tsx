@@ -6,8 +6,7 @@ import Loading from "../components/Loading";
 import Comments from "../components/Comments";
 import NewComment from "../components/NewComment";
 import { useAuth } from "../contexts/authContext";
-import { useNavigate } from "react-router-dom";
-import BackButton from "../components/BackButton";
+
 
 
 
@@ -16,7 +15,7 @@ export default function PostDetailPage() {
     const [post, setPost] = useState<Post | null>(null);
     const [comments, setComments] = useState([]);
     const { user} = useAuth();
-    const navigate = useNavigate();
+
 
 
 

@@ -1,4 +1,4 @@
-import BackButton from "../components/BackButton";
+
 import PostForm from "../components/PostForm";
 
 export default function NewPostPage() {
