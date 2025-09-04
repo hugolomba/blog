@@ -20,6 +20,7 @@ export type Comment = {
   content: string;
   authorId: number;
   postId: number;
+  post?: Post;
   createdAt: string;
   author: User;
   likes: User[];
@@ -37,9 +38,20 @@ export type Post = {
   published: boolean;
   createdAt: string; 
   updatedAt: string; 
-  savedBy: [commentId: number, createdAt: string, id: number, postId: number, userId: number][];
-  likes: [commentId: number, createdAt: string, id: number, postId: number, userId: number][];
-
+  savedBy: {
+    id: number;
+    userId: number;
+    postId: number;
+    commentId: number;
+    createdAt: string;
+  }[];
+  likes: {
+    id: number;
+    userId: number;
+    postId: number;
+    commentId: number;
+    createdAt: string;
+  }[];
 };
 
 export type RecentPostsProps = {
@@ -58,4 +70,5 @@ export type AuthContextType = {
   logout: () => void;
   editUser: (id: number, name: string, surname: string, username: string, email: string, bio: string, avatarImage: File | null) => Promise<void>;
   loading: boolean;
+  id: number | undefined;
 }

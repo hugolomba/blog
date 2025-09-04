@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
 import { MdDelete } from "react-icons/md";
-import Loading from "../components/Loading";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
 

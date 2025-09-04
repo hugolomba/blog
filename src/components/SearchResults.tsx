@@ -8,7 +8,7 @@ import Loading from "./Loading";
 
 
 export default function SearchResults({ searchResults }: SearchResultsProps) {
-  const { setSearchResults, searchAuthorsResults, setSearchAuthorsResults, isLoadingSearch } = useContext(SearchContext);
+  const { setSearchResults, searchAuthorsResults, isLoadingSearch } = useContext(SearchContext);
   const [searchType, setSearchType] = useState<"articles" | "authors">("articles");
 
   console.log("SearchResults component received searchResults:", searchResults);
@@ -48,7 +48,7 @@ export default function SearchResults({ searchResults }: SearchResultsProps) {
       </ul>
       ) : (
         <ul className="mt-4">
-        {searchAuthorsResults.map((author) => (
+        {searchAuthorsResults && searchAuthorsResults.map((author) => (
           <SearchUserResultCard key={author.id} user={author} />
         ))}
       </ul>

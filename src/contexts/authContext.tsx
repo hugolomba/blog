@@ -54,7 +54,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       formData.append("bio", bio);
       formData.append("avatarImage", avatarImage);
 
-      const response = await axios.post(`${import.meta.env.VITE_API_URL_BASE}/auth/register`, formData);
+      await axios.post(`${import.meta.env.VITE_API_URL_BASE}/auth/register`, formData);
     } catch (err) {
       console.error("Sign up error:", err);
       return Promise.reject(err);
@@ -107,7 +107,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }; 
 
   return (
-    <AuthContext.Provider value={{ user, register, login, logout, editUser, loading }}>
+    <AuthContext.Provider value={{id: user?.id, user, register, login, logout, editUser, loading }}>
       {children}
     </AuthContext.Provider>
   );

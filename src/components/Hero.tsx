@@ -4,7 +4,7 @@ import LoggedGreetings from "./LoggedGreetings";
 import NotLoggedGreeting from "./NotLoggedGreeting";
 
 export default function Header() {
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
 
   return (
     <section className="text-gray-800 p-4 rounded-xl ">

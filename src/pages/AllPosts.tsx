@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/authContext';
 import axios from 'axios';
-import { GiToken } from 'react-icons/gi';
 import PostCard from '../components/PostCard';
 import { useNavigate } from 'react-router-dom';
+import type { Post } from '../types/types';
 
 
 export default function AllPosts() {
     const { user } = useAuth();
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState<Post[]>([]);
     const navigate = useNavigate();
   
 
@@ -28,7 +28,7 @@ export default function AllPosts() {
         };
 
         fetchPosts();
-    }, [user.id]);
+    }, [user?.id]);
 
   return (
     <div className='p-4'>

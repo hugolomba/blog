@@ -1,5 +1,5 @@
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import type { Post, User, AuthContextType } from "../types/types";
+import type { Post, AuthContextType } from "../types/types";
 import { useAuth } from "../contexts/authContext";
 import { useState, useEffect } from "react";
 import CommentCard from "./CommentCard";
@@ -32,49 +32,60 @@ export default function Comments({ comments, handleUpdateComments }: { comments:
             });
 
         
-            setLikes(prevLikes =>
-                prevLikes.map(likeObj =>
-                    likeObj.commentId === commentId
-                        ? {
-                              ...likeObj,
-                              userIds: likeObj.userIds.includes(user.id)
-                                  ? likeObj.userIds.filter(id => id !== user.id)
-                                  : [...likeObj.userIds, user.id]
-                          }
-                        : likeObj
-                )
-            );
+setLikes(prevLikes =>
+  prevLikes.map(likeObj =>
+    likeObj.commentId === commentId
+      ? {
+            ...likeObj,
+            userIds: likeObj.userIds.includes(String(user.id))
+                ? likeObj.userIds.filter(id => id !== String(user.id))
+                : [...likeObj.userIds, String(user.id)]
+        }
+      : likeObj
+  )
+);
 
         } catch (error) {
             console.error("Error liking comment:", error);
         }
     };
 
-    const handleLikeIcon = (commentId: string) => {
-        if (!user) return null;
-        const commentLikeObj = likes.find(likeObj => likeObj.commentId === commentId);
-        const userHasLiked = commentLikeObj?.userIds.includes(user.id) ?? false;
-        return userHasLiked
-            ? <FaHeart onClick={() => handleLike(commentId)} className="text-red-500 text-lg cursor-pointer" />
-            : <FaRegHeart onClick={() => handleLike(commentId)} className="text-lg cursor-pointer" />;
-    };
+   const handleLikeIcon = (commentId: string) => {
+
+    if (!user || !user.user?.id) return null;
+
+    const commentLikeObj = likes.find(likeObj => likeObj.commentId === commentId);
+    const userId = String(user.user.id); 
+
+    const userHasLiked = commentLikeObj?.userIds.includes(userId) ?? false;
+
+    return userHasLiked
+        ? <FaHeart onClick={() => handleLike(commentId)} className="text-red-500 text-lg cursor-pointer" />
+        : <FaRegHeart onClick={() => handleLike(commentId)} className="text-lg cursor-pointer" />;
+};
 
     const getLikeCount = (commentId: string) => {
         const commentLikeObj = likes.find(likeObj => likeObj.commentId === commentId);
         return commentLikeObj?.userIds.length ?? 0;
     };
 
-    return (
-        <div className="mt-8 p-4">
-            <h3 className="text-xl font-semibold">Comments ({comments.length})</h3>
-            <div className="flex flex-col gap-4 mt-4">
-                {
-                    comments.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).map(comment => (
-                        <CommentCard key={comment.id} user={user?.user} comment={comment} getLikeCount={getLikeCount} handleLikeIcon={handleLikeIcon} handleUpdateComments={handleUpdateComments} />
-                    ))
-                }
-            </div>
+return (
+    <div className="mt-8 p-4">
+        <h3 className="text-xl font-semibold">Comments ({comments.length})</h3>
+        <div className="flex flex-col gap-4 mt-4">
+            {comments
+                .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                .map((comment) => (
+                    <CommentCard
+                        key={comment.id}
+                        user={user?.user ?? null}
+                        comment={comment}
+                        getLikeCount={getLikeCount}
+                        handleLikeIcon={handleLikeIcon}
+                        handleUpdateComments={handleUpdateComments}
+                    />
+                ))}
         </div>
-    );
+    </div>
+);
 }
-

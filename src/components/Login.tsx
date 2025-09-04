@@ -13,7 +13,7 @@ export default function Login() {
     e.preventDefault();
     setError("")
     try {
-      const response = await login(username, password);
+     await login(username, password);
       if (localStorage.getItem("token")) {
         navigate("/");
       }

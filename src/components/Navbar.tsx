@@ -67,7 +67,7 @@ function Navbar() {
          
             <img
           className="w-12 h-12 object-cover rounded-full cursor-pointer"
-          src={user ? user.avatarImage : placeholder}
+          src={user && user.avatarImage}
           alt="User avatar"
         />
 
