@@ -57,4 +57,5 @@ export type AuthContextType = {
   login: (username: string, password: string) => Promise<void>;
   logout: () => void;
   editUser: (id: number, name: string, surname: string, username: string, email: string, bio: string, avatarImage: File | null) => Promise<void>;
+  loading: boolean;
 }

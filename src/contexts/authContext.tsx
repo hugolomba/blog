@@ -13,6 +13,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const token = localStorage.getItem("token");
+  const [loading, setLoading] = useState(true);
 
 
 
@@ -23,6 +24,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const fetchUser = async () => {
         try {
+            
             const response = await axios.get(`${import.meta.env.VITE_API_URL_BASE}/users/me`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -33,6 +35,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         } catch (error) {
             console.error("Error fetching user:", error);
             localStorage.removeItem("token");
+        } finally {
+            setLoading(false);
         }
     }
     fetchUser();
@@ -103,7 +107,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }; 
 
   return (
-    <AuthContext.Provider value={{ user, register, login, logout, editUser }}>
+    <AuthContext.Provider value={{ user, register, login, logout, editUser, loading }}>
       {children}
     </AuthContext.Provider>
   );

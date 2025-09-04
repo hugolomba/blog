@@ -56,11 +56,19 @@ export default function PostDetailPage() {
 
   return (
     <div className="mt-2">
-        <button onClick={() => navigate(-1)} className="text-lg font-bold ml-2 cursor-pointer">← Back</button>
-
-        {post ? <Article post={post} /> : <Loading />}
-        {post && <Comments comments={comments} handleUpdateComments={handleUpdateComments} />}
-        {post && user !== null ? <NewComment postId={post.id} userId={user.id} handleUpdateComments={handleUpdateComments} /> : loginToComment()}
+       {post ? (
+  <>
+    <button onClick={() => navigate(-1)} className="text-lg font-bold ml-2 cursor-pointer">← Back</button>
+    <Article post={post} />
+    <Comments comments={comments} handleUpdateComments={handleUpdateComments} />
+    {user !== null 
+      ? <NewComment postId={post.id} userId={user.id} handleUpdateComments={handleUpdateComments} /> 
+      : loginToComment()
+    }
+  </>
+) : (
+  <Loading />
+)}
     </div>
   );
 }
