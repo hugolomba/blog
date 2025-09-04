@@ -38,7 +38,7 @@ export default function EditPostPage() {
 
   return (
     <div>
-      <h1>Edit Post</h1>
+      <h1 className="text-3xl text-center font-bold mb-8">Edit Your Post</h1>
       <PostForm mode="edit" post={post} />
     </div>
   );

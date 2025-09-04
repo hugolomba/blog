@@ -114,15 +114,17 @@ export default function Register() {
 
   return (
     <div className="flex flex-col items-center mt-6">
-      <h1 className="text-2xl font-bold">{isEditMode ? "Edit Profile" : "Register"}</h1>
-      {userCreated && <UserCreated isEditMode={isEditMode} />}
+
+      {userCreated && <UserCreated isEditMode={isEditMode} onClose={() => setUserCreated(false)} />}
       {isLoading && <Loading />}
       {!userCreated && !isLoading && (
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-2 w-80 bg-white p-6 rounded shadow"
+          className="flex flex-col gap-1 w-full"
         >
+          <label htmlFor="name">Name</label>
           <input
+            id="name"
             type="text"
             placeholder="Name"
             value={name}
@@ -131,7 +133,9 @@ export default function Register() {
           />
           {errors.name && <span className="text-red-500 text-sm">{errors.name}</span>}
 
+          <label htmlFor="surname">Surname</label>
           <input
+            id="surname"
             type="text"
             placeholder="Surname"
             value={surname}
@@ -140,7 +144,9 @@ export default function Register() {
           />
           {errors.surname && <span className="text-red-500 text-sm">{errors.surname}</span>}
 
+          <label htmlFor="username">Username</label>
           <input
+            id="username"
             type="text"
             placeholder="Username"
             value={username}
@@ -150,7 +156,9 @@ export default function Register() {
           />
           {errors.username && <span className="text-red-500 text-sm">{errors.username}</span>}
 
+          <label htmlFor="email">Email</label>
           <input
+            id="email"
             type="email"
             placeholder="Email"
             value={email}
@@ -161,7 +169,9 @@ export default function Register() {
 
           {!isEditMode && (
             <>
+              <label htmlFor="password">Password</label>
               <input
+                id="password"
                 type="password"
                 placeholder="Password"
                 value={password}
@@ -173,7 +183,9 @@ export default function Register() {
             </>
           )}
 
+          <label htmlFor="bio">Bio (optional)</label>
           <textarea
+            id="bio"
             placeholder="Bio (optional)"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
@@ -186,7 +198,9 @@ export default function Register() {
             </div>
           )}
 
+          <label htmlFor="avatarImage">Avatar Image</label>
           <input
+            id="avatarImage"
             type="file"
             onChange={handleFileChange}
             className={`px-2 py-1 rounded border ${errors.avatarImage ? "border-red-500" : ""}`}
@@ -205,19 +219,47 @@ export default function Register() {
   );
 }
 
-type UserCreatedProps = { isEditMode: boolean };
-function UserCreated({ isEditMode }: UserCreatedProps) {
+type UserCreatedProps = { isEditMode: boolean; onClose: () => void };
+function UserCreated({ isEditMode, onClose }: UserCreatedProps) {
+  const { user } = useAuth();
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 gap-4">
-      <p className="text-green-500">
-        {isEditMode ? "Profile updated successfully!" : "User created successfully!"}
-      </p>
-      <Link className="text-blue-500 hover:underline" to="/login">
-        Go to Login
-      </Link>
-      <Link className="text-blue-500 hover:underline" to="/">
-        Go to Home
-      </Link>
-    </div>
+    <>
+      <div className="fixed inset-0bg-opacity-50 z-40"></div>
+      <div className="fixed inset-0 flex items-center justify-center z-50">
+        <div className="bg-white rounded-lg shadow-lg w-96 p-6 relative">
+          <button
+            onClick={onClose}
+            aria-label="Close"
+            className="absolute top-3 right-3 text-gray-600 hover:text-gray-900"
+          >
+            &#x2715;
+          </button>
+          <p className="text-green-600 text-lg mb-6 text-center">
+            {isEditMode ? "Profile updated successfully!" : "User created successfully!"}
+          </p>
+          <div className="flex justify-center gap-4">
+          {!isEditMode ? (<Link
+              to="/login"
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-center w-32"
+            >
+              Go to Login
+            </Link>) : (
+              <Link
+                to={`/profile/${user?.id}`}
+                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-center w-32"
+              >
+                Go to Profile
+              </Link>
+            )}
+            <Link
+              to="/"
+              className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 text-center w-32"
+            >
+              Go to Home
+            </Link>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }

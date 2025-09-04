@@ -22,9 +22,9 @@ import AllPosts from './pages/AllPosts'
 export default function AppRouter() {
   return (
     <BrowserRouter>
-    <div className='p-4 flex flex-col min-h-screen max-w-7xl mx-auto'>
+    <div className='p-4 flex flex-col min-h-screen mx-auto'>
       <Navbar /> 
-      <main className='flex-grow'>
+      <main className='flex-grow lg:w-3/4 md:w-full sm:w-full xs:w-full mx-auto mt-6 mb-6'>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />

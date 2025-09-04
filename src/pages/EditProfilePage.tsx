@@ -6,12 +6,10 @@ export default function EditProfilePage() {
 
 
   return (
-    <>
-      <button onClick={() => navigate(-1)} className="text-lg font-bold ml-2 cursor-pointer">← Back</button>
       <div className="flex flex-col items-center mt-6">
-
-        <Register />
+      <h1 className="text-3xl text-center font-bold mb-8">Edit Your Profile</h1>
+      <Register />
       </div>
-    </>
+    
   );
 }

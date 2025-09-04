@@ -4,7 +4,7 @@ import Search from "./Search";
 
 export default function NotLoggedGreeting() {
   return (
-    <section className="text-center py-8 px-4">
+    <div className="text-center py-8 px-4">
       <h2 className="text-3xl font-bold mb-3">Start your blog today ✨</h2>
       <p className="text-gray-600 mb-5">
         Create your space, share ideas, and inspire people all over the world.
@@ -14,6 +14,6 @@ export default function NotLoggedGreeting() {
       </Link>
       <h3 className="text-center text-gray-600 mt-8">Feel free to explore and enjoy reading!</h3>
       <Search />
-    </section>
+    </div>
   );
 }

@@ -32,6 +32,7 @@ function Navbar() {
     <nav className="navbar p-2 flex justify-between items-center font-poppins relative bg-white rounded-lg ">
         <Link to="/" className="hover:text-gray-600 flex-1 text-3xl font-bold bg-gradient-to-b from-blue-600 to-purple-800 bg-clip-text text-transparent">
           <h1 className="inline-block">Blog</h1> 
+         
         </Link>
 
 {!loading && (
@@ -66,7 +67,7 @@ function Navbar() {
    
          
             <img
-          className="w-12 h-12 object-cover rounded-full cursor-pointer"
+          className="w-16 h-16 object-cover rounded-full cursor-pointer"
           src={user && user.avatarImage}
           alt="User avatar"
         />

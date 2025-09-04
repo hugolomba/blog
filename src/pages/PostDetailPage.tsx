@@ -7,6 +7,7 @@ import Comments from "../components/Comments";
 import NewComment from "../components/NewComment";
 import { useAuth } from "../contexts/authContext";
 import { useNavigate } from "react-router-dom";
+import BackButton from "../components/BackButton";
 
 
 
@@ -58,8 +59,7 @@ export default function PostDetailPage() {
     <div className="mt-2">
        {post ? (
   <>
-    <button onClick={() => navigate(-1)} className="text-lg font-bold ml-2 cursor-pointer">← Back</button>
-    <Article post={post} />
+      <Article post={post} />
     <Comments comments={comments} handleUpdateComments={handleUpdateComments} />
     {user !== null 
       ? <NewComment postId={post.id} userId={user.id} handleUpdateComments={handleUpdateComments} /> 

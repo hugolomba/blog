@@ -30,9 +30,9 @@ export default function PostCard({ post }: { post: Post }) {
   };
 
   return (
-    <Link to={`/post/${post.id}`}>
-      <li className="bg-white rounded-md shadow-md p-4 mb-6 hover:shadow-lg transition">
-        <img src={post.coverImage} alt={post.title} className="w-full h-42 object-cover rounded-md" />
+    <li className="bg-white rounded-md shadow-md p-4 mb-6 hover:shadow-lg transition w-full ">
+      <Link to={`/post/${post.id}`}>
+        <img src={post.coverImage} alt={post.title} className="w-full h-42 lg:h-80 object-cover rounded-md " />
 
 
 
@@ -60,7 +60,8 @@ export default function PostCard({ post }: { post: Post }) {
           <img src={post.author.avatarImage} alt={post.author.name} className="inline-block w-4.5 h-4.5 rounded-full mr-2" />
          </div>
       </div>
+      </Link>
     </li>
-    </Link>
+    
   );
 }

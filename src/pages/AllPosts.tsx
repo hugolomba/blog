@@ -2,17 +2,13 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/authContext';
 import axios from 'axios';
 import PostCard from '../components/PostCard';
-import { useNavigate } from 'react-router-dom';
 import type { Post } from '../types/types';
 
 
 export default function AllPosts() {
     const { user } = useAuth();
     const [posts, setPosts] = useState<Post[]>([]);
-    const navigate = useNavigate();
-  
 
-    // Fetch posts from the API or context
     useEffect(() => {
                     const fetchPosts = async () => {
                         const response = await axios.get(`${import.meta.env.VITE_API_URL_BASE}/posts/me`,
@@ -32,10 +28,8 @@ export default function AllPosts() {
 
   return (
     <div className='p-4'>
-    <button onClick={() => navigate(-1)} className="text-lg font-bold ml-2 cursor-pointer">← Back</button>
-
-      <h1 className="text-2xl font-bold">All Your Posts</h1>
-      <p className="mt-2">Here you can view all your posts.</p>
+     
+      <h1 className="text-3xl text-center font-bold mb-8">All your posts</h1>
       <ul className="mt-4">
         {posts && posts.map((post) => (
           <PostCard key={post.id} post={post} />

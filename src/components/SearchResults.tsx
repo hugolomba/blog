@@ -40,14 +40,14 @@ export default function SearchResults({ searchResults }: SearchResultsProps) {
       
 
       {isLoadingSearch ? <Loading /> : searchType === "articles" ? (
-        <ul className="mt-4">
+        <ul className="mt-4 lg:flex lg:flex-wrap lg:gap-4">
         {searchResults.map((post) => (
           <PostCard key={post.id} post={post} />
         
         ))}
       </ul>
       ) : (
-        <ul className="mt-4">
+        <ul className="mt-4 lg:flex lg:flex-wrap lg:gap-4">
         {searchAuthorsResults && searchAuthorsResults.map((author) => (
           <SearchUserResultCard key={author.id} user={author} />
         ))}

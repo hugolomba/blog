@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import type { Post, User, Comment, SavedPost } from "../types/types";
 import { FaRegHeart, FaRegComment, FaRegBookmark } from "react-icons/fa";
 import { useAuth } from "../contexts/authContext";
+import Loading from "../components/Loading";
 
 export default function ProfilePage() {
   const navigate = useNavigate();
@@ -29,10 +30,9 @@ export default function ProfilePage() {
 
   return (
     <div className="p-4">  
-      <button onClick={() => navigate(-1)} className="text-lg font-bold ml-2 cursor-pointer">← Back</button>
-      {userProfile ? <ProfileHeader userProfile={userProfile} /> : <p>Loading...</p>}
-      
-      <div className="mt-14 flex flex-row justify-evenly text-lg">
+      {userProfile ? (<>
+        <ProfileHeader userProfile={userProfile} /> 
+          <div className="mt-14 flex flex-row justify-evenly text-lg">
         <button onClick={() => handleSelectSection("articles")} className={`${selectedSection === "articles" && "font-bold border-b"} cursor-pointer`}>Articles</button>
         <button onClick={() => handleSelectSection("comments")} className={`${selectedSection === "comments" && "font-bold border-b"} cursor-pointer`}>Comments</button>
         <button onClick={() => handleSelectSection("savedPosts")} className={`${selectedSection === "savedPosts" && "font-bold border-b"} cursor-pointer`}>Saved Posts</button>
@@ -41,6 +41,11 @@ export default function ProfilePage() {
       {userProfile && selectedSection === "articles" && <ProfileArticles userProfile={userProfile} />}
       {userProfile && selectedSection === "comments" && <ProfileComments userProfile={userProfile} />}
       {userProfile && selectedSection === "savedPosts" && <ProfileSavedPosts userProfile={userProfile} />}
+      </>
+
+      ) : (
+        <Loading />
+      )}
     </div>
   );
 }
