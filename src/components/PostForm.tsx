@@ -94,6 +94,8 @@ const removeCover = async () => {
           newPostId={mode === "edit" ? post?.id : newPostId}
           mode={mode}
         />
+      ) : isLoading ? (
+        <Loading />
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4 flex flex-col">
           <input
@@ -118,7 +120,7 @@ const removeCover = async () => {
           <RichTextEditor value={content} onChange={setContent} />
           
           <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-           {isLoading ? <Loading /> : (mode === "edit" ? "Update Post" : "Publish Post")}
+           {mode === "edit" ? "Update Post" : "Publish Post"}
           </button>
         </form>
       )}

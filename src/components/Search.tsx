@@ -5,13 +5,15 @@ import { SearchContext } from "../contexts/SearchContext";
 
 export default function Search() {
   const [query, setQuery] = useState("");
-  const { setSearchResults, searchResults, searchAuthorsResults, setSearchAuthorsResults } = useContext(SearchContext);
+  const { setSearchResults, searchResults, searchAuthorsResults, setSearchAuthorsResults, setIsLoadingSearch } = useContext(SearchContext);
+
 
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     setSearchResults([])
     try {
+      setIsLoadingSearch(true);
       
         const postResults = await axios.get(`${import.meta.env.VITE_API_URL_BASE}/posts/search?q=${query}`);
         setSearchResults(postResults.data);
@@ -28,6 +30,8 @@ export default function Search() {
 
     } catch (error) {
       console.error("Error fetching search results:", error);
+    } finally {
+      setIsLoadingSearch(false);
     }
   };
 
