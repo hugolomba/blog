@@ -36,7 +36,7 @@ export default function Search() {
   };
 
   return (
-    <form className="w-full flex items-center relative mt-1.5" onSubmit={handleSearch}>
+    <form className="w-full md:w-1/2 mx-auto flex items-center relative mt-1.5" onSubmit={handleSearch}>
      
       <label htmlFor="search" className="sr-only">Search Articles</label>
       <FiSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />

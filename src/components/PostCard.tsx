@@ -30,13 +30,13 @@ export default function PostCard({ post }: { post: Post }) {
   };
 
   return (
-    <li className="bg-white rounded-md shadow-md p-4 mb-6 hover:shadow-lg transition w-full ">
+    <li className="bg-white rounded-md shadow-md p-4 mb-6 hover:shadow-lg transition w-full lg:w-md xl:w-130">
       <Link to={`/post/${post.id}`}>
-        <img src={post.coverImage} alt={post.title} className="w-full h-42 lg:h-80 object-cover rounded-md " />
+        <img src={post.coverImage} alt={post.title} className="w-full h-42 object-cover rounded-md " />
 
 
 
-      <div className="flex justify-between items-center mt-2 mb-1">
+      <div className="flex justify-between items-center mt-2 mb-1 md:flex-col md:items-start">
         <h3 className="text-lg font-semibold">{post.title}</h3>
         <div className="text-gray-600 flex items-center gap-2 cursor-pointer">
           
