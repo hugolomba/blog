@@ -15,7 +15,6 @@ export default function NotLoggedGreeting({user}: {user: {name: string}}) {
             <Link to="/dashboard" className="px-4 py-2 bg-white text-blue-700 font-semibold rounded-xl shadow hover:scale-105 transition">
             Dashboard
             </Link>
-           {/* <h3 className="text-center text-gray-50">Feel free to explore and enjoy reading!</h3> */}
            <Search />
         </div>
         

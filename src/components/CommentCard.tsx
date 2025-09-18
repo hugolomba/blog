@@ -14,8 +14,6 @@ export default function CommentCard({user, comment, getLikeCount, handleLikeIcon
                     "Authorization": `Bearer ${localStorage.getItem("token")}`
                 }
             });
-
-            // Optionally, you can update the UI state to remove the deleted comment
             handleUpdateComments(comment.postId);
         } catch (error) {
             console.error("Error deleting comment:", error);
