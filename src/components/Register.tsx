@@ -24,6 +24,7 @@ export default function Register() {
     email: "",
     password: "",
     avatarImage: "",
+    bio: "",
   });
 
   const isEditMode = !!user;

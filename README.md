@@ -5,30 +5,30 @@ Users can read posts, like them, save favourites, comment, and—once authentica
 
 This project simulates a real-world CMS application and includes authentication, routing, data fetching, rich text editing and persistent storage.
 
-👉 **Live Demo:** https://blogapp.hugo-miranda.dev  
-👉 **Backend API:** https://github.com/hugolomba/blog-api
+**Live Demo:** https://blogapp.hugo-miranda.dev  
+ **Backend API:** https://github.com/hugolomba/blog-api
 
 ---
 
-## 🚀 Features
+## Features
 
-### 👤 Authentication & Users
+### Authentication & Users
 
 - Sign up, login and logout
 - Protected routes
 - Only authenticated users can create or edit posts
 - Only owners can update/delete their posts
 
-### 📝 Blog Functionalities
+### Blog Functionalities
 
 - Create, edit and delete posts
 - Rich text editor (TinyMCE + Quill)
-- Like and save favourite posts
+- Like and save favorite posts
 - Comment system
 - Individual post page
 - Post list on homepage
 
-### 🌐 Frontend Tech
+### Frontend Tech
 
 - **React 19**
 - **TypeScript**
@@ -37,7 +37,7 @@ This project simulates a real-world CMS application and includes authentication,
 - **React Query**
 - **Axios**
 
-### 🔧 Backend Tech (separate repository)
+### Backend Tech (separate repository)
 
 - Node.js
 - Express
@@ -48,7 +48,7 @@ This project simulates a real-world CMS application and includes authentication,
 
 ---
 
-## 📂 Project Structure (Frontend)
+## Project Structure (Frontend)
 
 ```bash
 src/
