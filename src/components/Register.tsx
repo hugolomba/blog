@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../contexts/authContext"; 
+import { useAuth } from "../contexts/authContext";
 import Loading from "./Loading";
 import { Link } from "react-router-dom";
 
@@ -41,7 +41,15 @@ export default function Register() {
 
   const validateForm = () => {
     let valid = true;
-    const newErrors = { name: "", username: "", surname: "", email: "", password: "", avatarImage: "" };
+    const newErrors = {
+      name: "",
+      username: "",
+      surname: "",
+      email: "",
+      password: "",
+      avatarImage: "",
+      bio: "",
+    };
 
     if (!name || name.length < 2) {
       newErrors.name = "Name is required and must be at least 2 characters";
@@ -49,12 +57,14 @@ export default function Register() {
     }
 
     if (!surname || surname.length < 2) {
-      newErrors.surname = "Surname is required and must be at least 2 characters";
+      newErrors.surname =
+        "Surname is required and must be at least 2 characters";
       valid = false;
     }
 
     if (!username || username.length < 4) {
-      newErrors.username = "Username is required and must be at least 4 characters";
+      newErrors.username =
+        "Username is required and must be at least 4 characters";
       valid = false;
     }
 
@@ -81,6 +91,11 @@ export default function Register() {
       }
     }
 
+    if (!bio || bio.length < 10) {
+      newErrors.bio = "Bio must be at least 10 characters";
+      valid = false;
+    }
+
     setErrors(newErrors);
     return valid;
   };
@@ -97,31 +112,50 @@ export default function Register() {
     if (!validateForm()) return;
 
     try {
-      setIsLoading(true); 
+      setIsLoading(true);
       if (isEditMode && user) {
-        await editUser(user.id, name, surname, username, email, bio, avatarImage);
+        await editUser(
+          user.id,
+          name,
+          surname,
+          username,
+          email,
+          bio,
+          // if the user doesn't select a new avatarImage, keep the existing one
+          avatarImage
+        );
       } else {
-        await registerUser(name, surname, username, email, password, bio, avatarImage!);
-        // await login(username, password);
+        await registerUser(
+          name,
+          surname,
+          username,
+          email,
+          password,
+          bio,
+          // the user cannot submit the form without an avatarImage when registering
+          avatarImage!
+        );
       }
+
+      setUserCreated(true);
     } catch (err) {
-      console.error("Registration error:", err);
+      alert("An error occurred. Please try again.");
     } finally {
       setIsLoading(false);
-      setUserCreated(true);
     }
   };
 
   return (
     <div className="flex flex-col items-center mt-6">
-
-      {userCreated && <UserCreated isEditMode={isEditMode} onClose={() => setUserCreated(false)} />}
+      {userCreated && (
+        <UserCreated
+          isEditMode={isEditMode}
+          onClose={() => setUserCreated(false)}
+        />
+      )}
       {isLoading && <Loading />}
       {!userCreated && !isLoading && (
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col gap-1 w-full"
-        >
+        <form onSubmit={handleSubmit} className="flex flex-col gap-1 w-full">
           <label htmlFor="name">Name</label>
           <input
             id="name"
@@ -129,9 +163,13 @@ export default function Register() {
             placeholder="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className={`px-2 py-1 rounded border ${errors.name ? "border-red-500" : ""}`}
+            className={`px-2 py-1 rounded border ${
+              errors.name ? "border-red-500" : ""
+            }`}
           />
-          {errors.name && <span className="text-red-500 text-sm">{errors.name}</span>}
+          {errors.name && (
+            <span className="text-red-500 text-sm">{errors.name}</span>
+          )}
 
           <label htmlFor="surname">Surname</label>
           <input
@@ -140,9 +178,13 @@ export default function Register() {
             placeholder="Surname"
             value={surname}
             onChange={(e) => setSurname(e.target.value)}
-            className={`px-2 py-1 rounded border ${errors.surname ? "border-red-500" : ""}`}
+            className={`px-2 py-1 rounded border ${
+              errors.surname ? "border-red-500" : ""
+            }`}
           />
-          {errors.surname && <span className="text-red-500 text-sm">{errors.surname}</span>}
+          {errors.surname && (
+            <span className="text-red-500 text-sm">{errors.surname}</span>
+          )}
 
           <label htmlFor="username">Username</label>
           <input
@@ -151,10 +193,14 @@ export default function Register() {
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className={`px-2 py-1 rounded border ${errors.username ? "border-red-500" : ""}`}
+            className={`px-2 py-1 rounded border ${
+              errors.username ? "border-red-500" : ""
+            }`}
             autoComplete="username"
           />
-          {errors.username && <span className="text-red-500 text-sm">{errors.username}</span>}
+          {errors.username && (
+            <span className="text-red-500 text-sm">{errors.username}</span>
+          )}
 
           <label htmlFor="email">Email</label>
           <input
@@ -163,9 +209,13 @@ export default function Register() {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={`px-2 py-1 rounded border ${errors.email ? "border-red-500" : ""}`}
+            className={`px-2 py-1 rounded border ${
+              errors.email ? "border-red-500" : ""
+            }`}
           />
-          {errors.email && <span className="text-red-500 text-sm">{errors.email}</span>}
+          {errors.email && (
+            <span className="text-red-500 text-sm">{errors.email}</span>
+          )}
 
           {!isEditMode && (
             <>
@@ -176,25 +226,36 @@ export default function Register() {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`px-2 py-1 rounded border ${errors.password ? "border-red-500" : ""}`}
+                className={`px-2 py-1 rounded border ${
+                  errors.password ? "border-red-500" : ""
+                }`}
                 autoComplete="new-password"
               />
-              {errors.password && <span className="text-red-500 text-sm">{errors.password}</span>}
+              {errors.password && (
+                <span className="text-red-500 text-sm">{errors.password}</span>
+              )}
             </>
           )}
 
-          <label htmlFor="bio">Bio (optional)</label>
+          <label htmlFor="bio">Bio</label>
           <textarea
             id="bio"
-            placeholder="Bio (optional)"
+            placeholder="Bio"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
             className="px-2 py-1 rounded border"
           />
+          {errors.bio && (
+            <span className="text-red-500 text-sm">{errors.bio}</span>
+          )}
 
           {preview && (
             <div className="flex flex-col gap-2">
-              <img src={preview} alt="Cover Preview" className="w-full max-h-64 object-cover rounded" />
+              <img
+                src={preview}
+                alt="Cover Preview"
+                className="w-full max-h-64 object-cover rounded"
+              />
             </div>
           )}
 
@@ -203,9 +264,13 @@ export default function Register() {
             id="avatarImage"
             type="file"
             onChange={handleFileChange}
-            className={`px-2 py-1 rounded border ${errors.avatarImage ? "border-red-500" : ""}`}
+            className={`px-2 py-1 rounded border ${
+              errors.avatarImage ? "border-red-500" : ""
+            }`}
           />
-          {errors.avatarImage && <span className="text-red-500 text-sm">{errors.avatarImage}</span>}
+          {errors.avatarImage && (
+            <span className="text-red-500 text-sm">{errors.avatarImage}</span>
+          )}
 
           <button
             type="submit"
@@ -224,7 +289,7 @@ function UserCreated({ isEditMode, onClose }: UserCreatedProps) {
   const { user } = useAuth();
   return (
     <>
-      <div className="fixed inset-0bg-opacity-50 z-40"></div>
+      <div className="fixed inset-0 bg-opacity-50 z-40"></div>
       <div className="fixed inset-0 flex items-center justify-center z-50">
         <div className="bg-white rounded-lg shadow-lg w-96 p-6 relative">
           <button
@@ -235,15 +300,19 @@ function UserCreated({ isEditMode, onClose }: UserCreatedProps) {
             &#x2715;
           </button>
           <p className="text-green-600 text-lg mb-6 text-center">
-            {isEditMode ? "Profile updated successfully!" : "User created successfully!"}
+            {isEditMode
+              ? "Profile updated successfully!"
+              : "User created successfully!"}
           </p>
           <div className="flex justify-center gap-4">
-          {!isEditMode ? (<Link
-              to="/login"
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-center w-32"
-            >
-              Go to Login
-            </Link>) : (
+            {!isEditMode ? (
+              <Link
+                to="/login"
+                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-center w-32"
+              >
+                Go to Login
+              </Link>
+            ) : (
               <Link
                 to={`/profile/${user?.id}`}
                 className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-center w-32"
